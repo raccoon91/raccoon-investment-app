@@ -1,4 +1,8 @@
 ### Flutter ###
+
+# ENV
+*.env
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
