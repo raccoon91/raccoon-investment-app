@@ -11,16 +11,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Raccoon Investment',
       theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.green,
+        primaryColor: Colors.teal,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: Colors.green,
+            foregroundColor: Colors.teal,
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.teal,
           ),
         ),
       ),

@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:raccoon_investment/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -17,14 +14,13 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   bool _redirecting = false;
   late final TextEditingController _emailController = TextEditingController();
+  late final TextEditingController _passwordController =
+      TextEditingController();
   late final StreamSubscription<AuthState> _authStateSubscription;
-  final _loginCallback = dotenv.env['SUPABASE_LOGIN_CALLBACK']!;
 
   @override
   void initState() {
     _authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
-      print(data.toString());
-
       if (_redirecting) return;
 
       final session = data.session;
@@ -42,40 +38,35 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     _emailController.dispose();
+    _passwordController.dispose();
     _authStateSubscription.cancel();
 
     super.dispose();
   }
 
   Future<void> _signIn() async {
-    print(_loginCallback);
-
     try {
       setState(() {
         _isLoading = true;
       });
 
-      await supabase.auth.signInWithOtp(
+      await supabase.auth.signInWithPassword(
         email: _emailController.text.trim(),
-        emailRedirectTo: kIsWeb ? null : _loginCallback,
+        password: _passwordController.text.trim(),
       );
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Check your email for a login link!')),
         );
-
-        _emailController.clear();
       }
-    } on AuthException catch (error) {
-      SnackBar(
-        content: Text(error.message),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      );
+
+      _emailController.clear();
+      _passwordController.clear();
     } catch (error) {
-      SnackBar(
-        content: const Text('Unexpected error occurred'),
-        backgroundColor: Theme.of(context).colorScheme.error,
+      const SnackBar(
+        content: Text('Unexpected error occurred'),
+        backgroundColor: Colors.red,
       );
     } finally {
       if (mounted) {
@@ -91,18 +82,25 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Sign In')),
       body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+        padding: const EdgeInsets.symmetric(
+          vertical: 18,
+          horizontal: 12,
+        ),
         children: [
-          const Text("sign in"),
-          const SizedBox(height: 18),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _emailController,
             decoration: const InputDecoration(labelText: 'Email'),
           ),
-          const SizedBox(height: 18),
+          TextFormField(
+            obscureText: true,
+            controller: _passwordController,
+            decoration: const InputDecoration(labelText: 'Password'),
+          ),
+          const SizedBox(height: 48),
           ElevatedButton(
             onPressed: _isLoading ? null : _signIn,
-            child: Text(_isLoading ? 'Loading' : 'Send Magic Link'),
+            child: Text(_isLoading ? 'Loading' : 'Sign In'),
           ),
         ],
       ),

@@ -24,6 +24,7 @@ class _SplashPageState extends State<SplashPage> {
     }
 
     final session = supabase.auth.currentSession;
+
     if (session != null) {
       Navigator.of(context).pushReplacementNamed('/account');
     } else {
@@ -35,7 +36,14 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Text(
+          "Raccoon Investment",
+          style: TextStyle(
+            color: Colors.teal,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }
