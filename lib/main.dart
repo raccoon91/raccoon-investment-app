@@ -20,7 +20,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:raccoon_investment/src/app.dart';
+import 'package:raccoon_investment/app.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;
@@ -36,5 +36,5 @@ Future<void> main() async {
     authFlowType: AuthFlowType.pkce,
   );
 
-  runApp(const MyApp());
+  runApp(const App());
 }

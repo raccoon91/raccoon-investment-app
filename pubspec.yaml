@@ -28,9 +28,13 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  bloc: ^8.1.0
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.1
   flutter_dotenv: ^5.0.2
+  formz: ^0.6.0
   supabase_flutter: ^1.10.3
 
 dev_dependencies:
