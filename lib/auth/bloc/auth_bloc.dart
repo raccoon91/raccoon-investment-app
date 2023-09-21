@@ -17,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _userRepository = userRepository,
         super(const AuthState.unknown()) {
     on<_AuthStatusChanged>(_onAuthStatusChanged);
+    on<AuthLoginCheck>(_onAuthCheck);
     on<AuthLogoutRequested>(_onAuthLogoutRequested);
     _authStatusSubscription = _authRepository.status.listen(
       (status) => add(_AuthStatusChanged(status)),
@@ -54,6 +55,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
+  void _onAuthCheck(
+    AuthLoginCheck event,
+    Emitter<AuthState> emit,
+  ) {
+    final user = _userRepository.getUser();
+
+    _authRepository.authCheck(user: user);
+  }
+
   void _onAuthLogoutRequested(
     AuthLogoutRequested event,
     Emitter<AuthState> emit,
@@ -64,6 +74,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   User? _tryGetUser() {
     try {
       final user = _userRepository.getUser();
+
       return user;
     } catch (_) {
       return null;

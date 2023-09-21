@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raccoon_investment/auth/bloc/auth_bloc.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -9,6 +11,8 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<AuthBloc>().add(AuthLoginCheck());
+
     return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
@@ -16,16 +20,3 @@ class SplashScreen extends StatelessWidget {
     );
   }
 }
-
-//  return const Scaffold(
-//       body: Center(
-//         child: Text(
-//           "Raccoon Investment",
-//           style: TextStyle(
-//             color: Colors.teal,
-//             fontSize: 22,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//       ),
-//     );

@@ -10,4 +10,6 @@ final class _AuthStatusChanged extends AuthEvent {
   final AuthStatus status;
 }
 
+final class AuthLoginCheck extends AuthEvent {}
+
 final class AuthLogoutRequested extends AuthEvent {}

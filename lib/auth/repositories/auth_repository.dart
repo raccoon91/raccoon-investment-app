@@ -15,6 +15,18 @@ class AuthRepository {
     yield* _controller.stream;
   }
 
+  void authCheck({User? user}) {
+    try {
+      if (user != null) {
+        _controller.add(AuthStatus.authenticated);
+      } else {
+        _controller.add(AuthStatus.unauthenticated);
+      }
+    } catch (error) {
+      const SnackBar(content: Text('Unexpected error occurred'));
+    }
+  }
+
   Future<void> logIn({required String email, required String password}) async {
     try {
       await supabase.auth.signInWithPassword(
