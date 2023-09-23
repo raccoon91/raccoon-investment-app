@@ -33,15 +33,24 @@ class HomeScreen extends StatelessWidget {
                 return Text('UserID: $userId');
               },
             ),
-            BlocBuilder<HomeBloc, List<Trade>>(
-              builder: (context, data) {
-                return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(title: Text(data[index].text));
-                    });
-              },
+            Flexible(
+              child: BlocBuilder<HomeBloc, List<Trade>>(
+                builder: (context, data) {
+                  return ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        return Wrap(
+                          children: [
+                            Text(data[index].date),
+                            Text(data[index].type),
+                            // Text(data[index].symbolId.toString()),
+                            // Text(data[index].price.toString()),
+                            Text(data[index].count.toString()),
+                          ],
+                        );
+                      });
+                },
+              ),
             ),
             ElevatedButton(
               child: const Text('Logout'),
