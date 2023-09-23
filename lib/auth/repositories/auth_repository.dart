@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:raccoon_investment/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -23,7 +22,7 @@ class AuthRepository {
         _controller.add(AuthStatus.unauthenticated);
       }
     } catch (error) {
-      const SnackBar(content: Text('Unexpected error occurred'));
+      print(error);
     }
   }
 
@@ -36,7 +35,7 @@ class AuthRepository {
 
       _controller.add(AuthStatus.authenticated);
     } catch (error) {
-      const SnackBar(content: Text('Unexpected error occurred'));
+      print(error);
     }
   }
 
@@ -46,9 +45,9 @@ class AuthRepository {
 
       _controller.add(AuthStatus.unauthenticated);
     } on AuthException catch (error) {
-      SnackBar(content: Text(error.message));
+      print(error.message);
     } catch (error) {
-      const SnackBar(content: Text('Unexpected error occurred'));
+      print(error);
     }
   }
 

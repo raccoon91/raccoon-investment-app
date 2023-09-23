@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raccoon_investment/auth/bloc/auth_bloc.dart';
 import 'package:raccoon_investment/auth/repositories/auth_repository.dart';
+import 'package:raccoon_investment/home/bloc/home_bloc.dart';
 import 'package:raccoon_investment/home/view/home_screen.dart';
 import 'package:raccoon_investment/login/repositories/user_repository.dart';
 import 'package:raccoon_investment/login/view/login_screen.dart';
@@ -35,11 +36,18 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: _authRepository,
-      child: BlocProvider(
-        create: (_) => AuthBloc(
-          authRepository: _authRepository,
-          userRepository: _userRepository,
-        ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => AuthBloc(
+              authRepository: _authRepository,
+              userRepository: _userRepository,
+            ),
+          ),
+          BlocProvider(
+            create: (_) => HomeBloc(),
+          )
+        ],
         child: const AppView(),
       ),
     );
@@ -66,14 +74,14 @@ class _AppViewState extends State<AppView> {
         return BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
             switch (state.status) {
-              case AuthStatus.authenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  HomeScreen.route(),
-                  (route) => false,
-                );
               case AuthStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil<void>(
                   LoginScreen.route(),
+                  (route) => false,
+                );
+              case AuthStatus.authenticated:
+                _navigator.pushAndRemoveUntil<void>(
+                  HomeScreen.route(),
                   (route) => false,
                 );
               default:

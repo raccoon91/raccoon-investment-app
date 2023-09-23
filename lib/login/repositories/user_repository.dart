@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:raccoon_investment/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -11,9 +10,9 @@ class UserRepository {
     try {
       _user = supabase.auth.currentUser;
     } on PostgrestException catch (error) {
-      SnackBar(content: Text(error.message));
+      print(error.message);
     } catch (error) {
-      const SnackBar(content: Text('Unexpected error occurred'));
+      print(error);
     }
 
     return _user;
