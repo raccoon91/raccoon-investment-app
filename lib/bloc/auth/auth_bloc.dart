@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:raccoon_investment/auth/repositories/auth_repository.dart';
-import 'package:raccoon_investment/login/repositories/user_repository.dart';
+import 'package:raccoon_investment/repository/auth_repository.dart';
+import 'package:raccoon_investment/repository/user_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'auth_event.dart';

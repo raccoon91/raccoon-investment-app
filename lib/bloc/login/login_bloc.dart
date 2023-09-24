@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-import 'package:raccoon_investment/auth/repositories/auth_repository.dart';
-import 'package:raccoon_investment/login/models/models.dart';
+import 'package:raccoon_investment/model/models.dart';
+import 'package:raccoon_investment/repository/auth_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:raccoon_investment/home/models/trade_model.dart';
 import 'package:raccoon_investment/main.dart';
+import 'package:raccoon_investment/model/trade_model.dart';
 
 class HomeBloc extends Cubit<List<Trade>> {
   HomeBloc() : super([]);

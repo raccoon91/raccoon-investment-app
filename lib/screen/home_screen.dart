@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:raccoon_investment/auth/bloc/auth_bloc.dart';
-import 'package:raccoon_investment/home/bloc/home_bloc.dart';
-import 'package:raccoon_investment/home/models/trade_model.dart';
+import 'package:raccoon_investment/bloc/auth/auth_bloc.dart';
+import 'package:raccoon_investment/bloc/home/home_bloc.dart';
+import 'package:raccoon_investment/model/trade_model.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:raccoon_investment/auth/bloc/auth_bloc.dart';
-import 'package:raccoon_investment/auth/repositories/auth_repository.dart';
-import 'package:raccoon_investment/home/bloc/home_bloc.dart';
-import 'package:raccoon_investment/home/view/home_screen.dart';
-import 'package:raccoon_investment/login/repositories/user_repository.dart';
-import 'package:raccoon_investment/login/view/login_screen.dart';
-import 'package:raccoon_investment/splash/view/splash_screen.dart';
+import 'package:raccoon_investment/bloc/auth/auth_bloc.dart';
+import 'package:raccoon_investment/bloc/home/home_bloc.dart';
+import 'package:raccoon_investment/repository/auth_repository.dart';
+import 'package:raccoon_investment/repository/user_repository.dart';
+import 'package:raccoon_investment/screen/home_screen.dart';
+import 'package:raccoon_investment/screen/login_screen.dart';
+import 'package:raccoon_investment/screen/splash_screen.dart';
 import 'package:raccoon_investment/theme/theme.dart';
 
 class App extends StatefulWidget {
