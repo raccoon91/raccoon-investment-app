@@ -7,6 +7,7 @@ import 'package:raccoon_investment/home/view/home_screen.dart';
 import 'package:raccoon_investment/login/repositories/user_repository.dart';
 import 'package:raccoon_investment/login/view/login_screen.dart';
 import 'package:raccoon_investment/splash/view/splash_screen.dart';
+import 'package:raccoon_investment/theme/theme.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -70,6 +71,7 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: _navigatorKey,
+      theme: ThemeClass.theme,
       builder: (context, child) {
         return BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
