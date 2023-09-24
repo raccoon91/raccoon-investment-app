@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:raccoon_investment/bloc/login/login_bloc.dart';
+import 'package:raccoon_investment/widget/input.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -23,78 +24,69 @@ class LoginForm extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _UsernameInput(),
+            BlocBuilder<LoginBloc, LoginState>(
+              buildWhen: (previous, current) => previous.email != current.email,
+              builder: (context, state) {
+                return Input(
+                  id: 'login_screen_email_input',
+                  type: "email",
+                  label: "Email",
+                  error:
+                      state.email.displayError != null ? 'invalid email' : null,
+                  onChanged: (username) => context
+                      .read<LoginBloc>()
+                      .add(LoginEmailChanged(username)),
+                );
+              },
+            ),
             const Padding(padding: EdgeInsets.all(12)),
-            _PasswordInput(),
+            BlocBuilder<LoginBloc, LoginState>(
+              buildWhen: (previous, current) =>
+                  previous.password != current.password,
+              builder: (context, state) {
+                return Input(
+                  id: "login_screen_password_input",
+                  type: "password",
+                  label: "password",
+                  error: state.password.displayError != null
+                      ? 'invalid password'
+                      : null,
+                  onChanged: (password) => context
+                      .read<LoginBloc>()
+                      .add(LoginPasswordChanged(password)),
+                );
+              },
+            ),
             const Padding(padding: EdgeInsets.all(12)),
-            _LoginButton(),
+            BlocBuilder<LoginBloc, LoginState>(
+              builder: (context, state) {
+                return state.status.isInProgress
+                    ? const CircularProgressIndicator()
+                    : SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          key: const Key('login_screen_submit_button'),
+                          onPressed: state.isValid
+                              ? () {
+                                  context
+                                      .read<LoginBloc>()
+                                      .add(const LoginSubmitted());
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.teal,
+                            foregroundColor: Colors.white,
+                            disabledBackgroundColor: Colors.grey.shade100,
+                            disabledForegroundColor: Colors.grey.shade400,
+                          ),
+                          child: const Text('Login'),
+                        ),
+                      );
+              },
+            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _UsernameInput extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      buildWhen: (previous, current) => previous.email != current.email,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('loginForm_usernameInput_textField'),
-          onChanged: (username) =>
-              context.read<LoginBloc>().add(LoginEmailChanged(username)),
-          decoration: InputDecoration(
-            labelText: 'username',
-            errorText:
-                state.email.displayError != null ? 'invalid username' : null,
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _PasswordInput extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      buildWhen: (previous, current) => previous.password != current.password,
-      builder: (context, state) {
-        return TextField(
-          key: const Key('loginForm_passwordInput_textField'),
-          onChanged: (password) =>
-              context.read<LoginBloc>().add(LoginPasswordChanged(password)),
-          obscureText: true,
-          decoration: InputDecoration(
-            labelText: 'password',
-            errorText:
-                state.password.displayError != null ? 'invalid password' : null,
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _LoginButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      builder: (context, state) {
-        return state.status.isInProgress
-            ? const CircularProgressIndicator()
-            : ElevatedButton(
-                key: const Key('loginForm_continue_raisedButton'),
-                onPressed: state.isValid
-                    ? () {
-                        context.read<LoginBloc>().add(const LoginSubmitted());
-                      }
-                    : null,
-                child: const Text('Login'),
-              );
-      },
     );
   }
 }
