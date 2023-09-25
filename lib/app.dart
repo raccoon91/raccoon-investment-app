@@ -19,6 +19,9 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   late final AuthRepository _authRepository;
   late final UserRepository _userRepository;
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  NavigatorState get _navigator => _navigatorKey.currentState!;
 
   @override
   void initState() {
@@ -49,51 +52,33 @@ class _AppState extends State<App> {
             create: (_) => HomeBloc(),
           )
         ],
-        child: const AppView(),
-      ),
-    );
-  }
-}
-
-class AppView extends StatefulWidget {
-  const AppView({super.key});
-
-  @override
-  State<AppView> createState() => _AppViewState();
-}
-
-class _AppViewState extends State<AppView> {
-  final _navigatorKey = GlobalKey<NavigatorState>();
-
-  NavigatorState get _navigator => _navigatorKey.currentState!;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: _navigatorKey,
-      theme: ThemeClass.theme,
-      builder: (context, child) {
-        return BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            switch (state.status) {
-              case AuthStatus.unauthenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  LoginScreen.route(),
-                  (route) => false,
-                );
-              case AuthStatus.authenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  HomeScreen.route(),
-                  (route) => false,
-                );
-              default:
-                break;
-            }
+        child: MaterialApp(
+          navigatorKey: _navigatorKey,
+          theme: ThemeClass.theme,
+          builder: (context, child) {
+            return BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) {
+                switch (state.status) {
+                  case AuthStatus.unauthenticated:
+                    _navigator.pushAndRemoveUntil<void>(
+                      LoginScreen.route(),
+                      (route) => false,
+                    );
+                  case AuthStatus.authenticated:
+                    _navigator.pushAndRemoveUntil<void>(
+                      HomeScreen.route(),
+                      (route) => false,
+                    );
+                  default:
+                    break;
+                }
+              },
+              child: child,
+            );
           },
-          child: child,
-        );
-      },
-      onGenerateRoute: (_) => SplashScreen.route(),
+          onGenerateRoute: (_) => SplashScreen.route(),
+        ),
+      ),
     );
   }
 }

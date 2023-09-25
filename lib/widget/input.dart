@@ -4,6 +4,7 @@ class Input extends StatefulWidget {
   final String id;
   final String type;
   final String label;
+  final IconData icon;
   final String? error;
   final bool? autoFocus;
   final void Function(String)? onChanged;
@@ -13,6 +14,7 @@ class Input extends StatefulWidget {
     required this.id,
     required this.type,
     required this.label,
+    required this.icon,
     this.error,
     this.autoFocus,
     this.onChanged,
@@ -48,22 +50,42 @@ class _InputWidgetState extends State<Input> {
       decoration: InputDecoration(
         labelText: widget.label,
         labelStyle: TextStyle(
-          color: focusNode.hasFocus ? Colors.teal : Colors.white,
+          color: widget.error != null
+              ? Colors.red
+              : focusNode.hasFocus
+                  ? Colors.teal
+                  : Colors.white,
         ),
         errorText: widget.error,
-        prefixIcon: const Icon(Icons.person),
-        prefixIconColor: focusNode.hasFocus ? Colors.teal : Colors.white,
+        prefixIcon: Icon(widget.icon),
+        prefixIconColor: widget.error != null
+            ? Colors.red
+            : focusNode.hasFocus
+                ? Colors.teal
+                : Colors.white,
         enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
           borderSide: BorderSide(color: Colors.white),
         ),
         focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
           borderSide: BorderSide(color: Colors.teal),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.red),
+        ),
+        focusedErrorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.red),
         ),
       ),
       style: TextStyle(
-        color: focusNode.hasFocus ? Colors.teal : Colors.white,
+        color: widget.error != null
+            ? Colors.red
+            : focusNode.hasFocus
+                ? Colors.teal
+                : Colors.white,
       ),
     );
   }
