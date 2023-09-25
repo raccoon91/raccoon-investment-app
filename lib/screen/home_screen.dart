@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raccoon_investment/bloc/auth/auth_bloc.dart';
-import 'package:raccoon_investment/bloc/home/home_bloc.dart';
-import 'package:raccoon_investment/model/trade_model.dart';
+import 'package:raccoon_investment/bloc/trade/trade_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,12 +12,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dataBloc = BlocProvider.of<HomeBloc>(context);
-
-    if (dataBloc.state.isEmpty) {
-      dataBloc.getTradeData();
-    }
-
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
       body: Center(
@@ -34,21 +27,21 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             Flexible(
-              child: BlocBuilder<HomeBloc, List<Trade>>(
-                builder: (context, data) {
+              child: BlocBuilder<TradeBloc, TradeState>(
+                buildWhen: (prev, current) => current.status.isSuccess,
+                builder: (context, state) {
                   return ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        return Wrap(
-                          children: [
-                            Text(data[index].date),
-                            Text(data[index].type),
-                            // Text(data[index].symbolId.toString()),
-                            // Text(data[index].price.toString()),
-                            Text(data[index].count.toString()),
-                          ],
-                        );
-                      });
+                    itemCount: state.trades.length,
+                    itemBuilder: (context, index) {
+                      return Wrap(
+                        children: [
+                          Text(state.trades[index].date),
+                          Text(state.trades[index].type),
+                          Text(state.trades[index].count.toString()),
+                        ],
+                      );
+                    },
+                  );
                 },
               ),
             ),
