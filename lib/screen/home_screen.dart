@@ -53,6 +53,32 @@ class HomeScreen extends StatelessWidget {
                       context.read<AuthBloc>().add(AuthLogoutRequested());
                     },
                   ),
+                  const SizedBox(height: 20),
+                  BlocBuilder<TradeBloc, TradeState>(
+                    buildWhen: (prev, current) => current.status.isSuccess,
+                    builder: (context, state) {
+                      return Text(
+                        state.totalCount.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  BlocBuilder<TradeBloc, TradeState>(
+                    buildWhen: (prev, current) => current.status.isSuccess,
+                    builder: (context, state) {
+                      return Text(
+                        state.totalPrice.toStringAsFixed(2),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

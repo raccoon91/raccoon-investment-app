@@ -18,14 +18,32 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
 
     try {
       final trades = await tradeRepository.getsTrade();
+      num totalCount = 0;
+      num totalPrice = 0;
+
+      for (Trade trade in trades) {
+        if (trade.type == "buy") {
+          totalCount += trade.count;
+          totalPrice += (trade.price * trade.count);
+        } else if (trade.type == "sell") {
+          totalCount -= trade.count;
+          totalPrice -= (trade.price * trade.count);
+        }
+      }
 
       emit(
-        state.copyWith(status: TradeStatus.success, trades: trades),
+        state.copyWith(
+          status: TradeStatus.success,
+          trades: trades,
+          totalCount: totalCount,
+          totalPrice: totalPrice,
+        ),
       );
     } catch (error, stacktrace) {
-      emit(state.copyWith(status: TradeStatus.failure));
       print(error);
       print(stacktrace);
+
+      emit(state.copyWith(status: TradeStatus.failure));
     }
   }
 }
