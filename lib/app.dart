@@ -7,7 +7,6 @@ import 'package:raccoon_investment/repository/trade_repository.dart';
 import 'package:raccoon_investment/repository/user_repository.dart';
 import 'package:raccoon_investment/screen/home_screen.dart';
 import 'package:raccoon_investment/screen/login_screen.dart';
-import 'package:raccoon_investment/screen/splash_screen.dart';
 import 'package:raccoon_investment/theme/theme.dart';
 
 class App extends StatefulWidget {
@@ -56,7 +55,10 @@ class _AppState extends State<App> {
               listener: (context, state) {
                 switch (state.status) {
                   case AuthStatus.unauthenticated:
-                    _navigator.push(LoginScreen.route());
+                    _navigator.pushAndRemoveUntil(
+                      LoginScreen.route(),
+                      (route) => false,
+                    );
                   case AuthStatus.authenticated:
                     _navigator.push(
                       MaterialPageRoute(
@@ -75,47 +77,9 @@ class _AppState extends State<App> {
               child: child,
             );
           },
-          onGenerateRoute: (_) => SplashScreen.route(),
+          onGenerateRoute: (_) => LoginScreen.route(),
         ),
       ),
-    );
-  }
-}
-
-class AppView extends StatelessWidget {
-  AppView({super.key});
-
-  final _navigatorKey = GlobalKey<NavigatorState>();
-
-  NavigatorState get _navigator => _navigatorKey.currentState!;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: _navigatorKey,
-      theme: ThemeClass.theme,
-      builder: (context, child) {
-        return BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            switch (state.status) {
-              case AuthStatus.unauthenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  LoginScreen.route(),
-                  (route) => false,
-                );
-              case AuthStatus.authenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  HomeScreen.route(),
-                  (route) => false,
-                );
-              default:
-                break;
-            }
-          },
-          child: child,
-        );
-      },
-      onGenerateRoute: (_) => SplashScreen.route(),
     );
   }
 }
