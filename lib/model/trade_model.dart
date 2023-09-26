@@ -3,9 +3,9 @@ class Trade {
   final int symbolId;
   final String date;
   final String type;
-  final double price;
-  final double count;
-  final double commission;
+  final num price;
+  final num count;
+  final num commission;
   final String text;
 
   const Trade({

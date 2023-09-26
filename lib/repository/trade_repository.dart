@@ -13,9 +13,7 @@ class TradeRepository {
 
       return trades;
     } catch (error) {
-      print(error);
+      throw Exception(error);
     }
-
-    return [];
   }
 }

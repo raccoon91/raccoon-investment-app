@@ -20,13 +20,11 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
       final trades = await tradeRepository.getsTrade();
 
       emit(
-        state.copyWith(
-          status: TradeStatus.success,
-          trades: trades,
-        ),
+        state.copyWith(status: TradeStatus.success, trades: trades),
       );
     } catch (error, stacktrace) {
       emit(state.copyWith(status: TradeStatus.failure));
+      print(error);
       print(stacktrace);
     }
   }

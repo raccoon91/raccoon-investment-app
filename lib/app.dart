@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raccoon_investment/bloc/auth/auth_bloc.dart';
-import 'package:raccoon_investment/bloc/trade/trade_bloc.dart';
 import 'package:raccoon_investment/repository/auth_repository.dart';
-import 'package:raccoon_investment/repository/trade_repository.dart';
 import 'package:raccoon_investment/repository/user_repository.dart';
 import 'package:raccoon_investment/screen/home_screen.dart';
 import 'package:raccoon_investment/screen/login_screen.dart';
@@ -19,7 +17,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   late final AuthRepository _authRepository;
   late final UserRepository _userRepository;
-  late final TradeRepository _tradeRepository;
   final _navigatorKey = GlobalKey<NavigatorState>();
 
   NavigatorState get _navigator => _navigatorKey.currentState!;
@@ -29,7 +26,6 @@ class _AppState extends State<App> {
     super.initState();
     _authRepository = AuthRepository();
     _userRepository = UserRepository();
-    _tradeRepository = TradeRepository();
   }
 
   @override
@@ -60,15 +56,9 @@ class _AppState extends State<App> {
                       (route) => false,
                     );
                   case AuthStatus.authenticated:
-                    _navigator.push(
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) => TradeBloc(
-                            tradeRepository: _tradeRepository,
-                          )..add(GetsTrade()),
-                          child: const HomeScreen(),
-                        ),
-                      ),
+                    _navigator.pushAndRemoveUntil(
+                      HomeScreen.route(),
+                      (route) => false,
                     );
                   default:
                     break;
