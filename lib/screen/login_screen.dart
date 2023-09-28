@@ -37,7 +37,7 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           SizedBox(height: 60),
                           Text(
-                            "Welcom Back !",
+                            'Welcom Back !',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 40,

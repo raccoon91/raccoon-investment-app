@@ -43,15 +43,15 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Input(
-            type: "email",
-            label: "Email",
+            type: 'email',
+            label: 'Email',
             icon: Icons.person,
             controller: emailController,
           ),
           const SizedBox(height: 20),
           Input(
-            type: "password",
-            label: "password",
+            type: 'password',
+            label: 'password',
             icon: Icons.lock,
             controller: passwordController,
           ),

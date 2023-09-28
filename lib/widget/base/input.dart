@@ -40,10 +40,10 @@ class _InputWidgetState extends State<Input> {
       focusNode: focusNode,
       autofocus: widget.autoFocus ?? false,
       controller: widget.controller,
-      keyboardType: widget.type == "email"
+      keyboardType: widget.type == 'email'
           ? TextInputType.emailAddress
           : TextInputType.text,
-      obscureText: widget.type == "password" ? true : false,
+      obscureText: widget.type == 'password' ? true : false,
       validator: widget.validator,
       decoration: InputDecoration(
         labelText: widget.label,
