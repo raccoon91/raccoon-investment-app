@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                   ElevatedButton(
                     child: const Text('Logout'),
                     onPressed: () {
-                      context.read<AuthBloc>().add(AuthLogoutRequested());
+                      context.read<AuthBloc>().add(PostSignOut());
                     },
                   ),
                   const SizedBox(height: 20),

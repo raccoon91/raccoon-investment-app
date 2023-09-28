@@ -4,12 +4,13 @@ sealed class AuthEvent {
   const AuthEvent();
 }
 
-final class _AuthStatusChanged extends AuthEvent {
-  const _AuthStatusChanged(this.status);
+final class GetUser extends AuthEvent {}
 
-  final AuthStatus status;
+final class PostSignIn extends AuthEvent {
+  final String email;
+  final String password;
+
+  PostSignIn(this.email, this.password);
 }
 
-final class AuthLoginCheck extends AuthEvent {}
-
-final class AuthLogoutRequested extends AuthEvent {}
+final class PostSignOut extends AuthEvent {}

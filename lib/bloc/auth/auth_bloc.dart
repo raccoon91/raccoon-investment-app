@@ -1,83 +1,85 @@
-import 'dart:async';
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raccoon_investment/repository/auth_repository.dart';
-import 'package:raccoon_investment/repository/user_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc({
-    required AuthRepository authRepository,
-    required UserRepository userRepository,
-  })  : _authRepository = authRepository,
-        _userRepository = userRepository,
-        super(const AuthState.unknown()) {
-    on<_AuthStatusChanged>(_onAuthStatusChanged);
-    on<AuthLoginCheck>(_onAuthCheck);
-    on<AuthLogoutRequested>(_onAuthLogoutRequested);
-    _authStatusSubscription = _authRepository.status.listen(
-      (status) => add(_AuthStatusChanged(status)),
-    );
+  final AuthRepository authRepository;
+
+  AuthBloc({required this.authRepository}) : super(const AuthState()) {
+    on<GetUser>(onGetUser);
+    on<PostSignIn>(onPostSignIn);
+    on<PostSignOut>(onPostSignOut);
   }
 
-  final AuthRepository _authRepository;
-  final UserRepository _userRepository;
-  late StreamSubscription<AuthStatus> _authStatusSubscription;
+  void onGetUser(GetUser event, Emitter<AuthState> emit) {
+    try {
+      emit(state.copyWith(status: AuthStatus.loading));
 
-  @override
-  Future<void> close() {
-    _authStatusSubscription.cancel();
+      final user = authRepository.getUser();
 
-    return super.close();
-  }
+      final authenticated = user != null
+          ? Authenticated.authenticated
+          : Authenticated.unauthenticated;
 
-  Future<void> _onAuthStatusChanged(
-    _AuthStatusChanged event,
-    Emitter<AuthState> emit,
-  ) async {
-    switch (event.status) {
-      case AuthStatus.unauthenticated:
-        return emit(const AuthState.unauthenticated());
-      case AuthStatus.authenticated:
-        final user = _tryGetUser();
+      emit(
+        state.copyWith(
+          status: AuthStatus.success,
+          authenticated: authenticated,
+          user: user,
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: AuthStatus.failure));
 
-        return emit(
-          user != null
-              ? AuthState.authenticated(user)
-              : const AuthState.unauthenticated(),
-        );
-      case AuthStatus.unknown:
-        return emit(const AuthState.unknown());
+      throw Exception(error);
     }
   }
 
-  void _onAuthCheck(
-    AuthLoginCheck event,
-    Emitter<AuthState> emit,
-  ) {
-    final user = _userRepository.getUser();
-
-    _authRepository.authCheck(user: user);
-  }
-
-  void _onAuthLogoutRequested(
-    AuthLogoutRequested event,
-    Emitter<AuthState> emit,
-  ) {
-    _authRepository.logOut();
-  }
-
-  User? _tryGetUser() {
+  Future<void> onPostSignIn(PostSignIn event, Emitter<AuthState> emit) async {
     try {
-      final user = _userRepository.getUser();
+      final res = await authRepository.postSignIn(
+        email: event.email,
+        password: event.password,
+      );
 
-      return user;
-    } catch (_) {
-      return null;
+      final user = res.user;
+      final authenticated = user != null
+          ? Authenticated.authenticated
+          : Authenticated.unauthenticated;
+
+      emit(
+        state.copyWith(
+          status: AuthStatus.success,
+          authenticated: authenticated,
+          user: user,
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: AuthStatus.failure));
+
+      throw Exception(error);
+    }
+  }
+
+  Future<void> onPostSignOut(PostSignOut event, Emitter<AuthState> emit) async {
+    try {
+      await authRepository.postSignOut();
+
+      emit(
+        state.copyWith(
+          status: AuthStatus.success,
+          authenticated: Authenticated.unauthenticated,
+          user: null,
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: AuthStatus.failure));
+
+      throw Exception(error);
     }
   }
 }

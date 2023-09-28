@@ -10,16 +10,17 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
   final TradeRepository tradeRepository;
 
   TradeBloc({required this.tradeRepository}) : super(const TradeState()) {
-    on<GetsTrade>(_onGetsTrade);
+    on<GetsTrade>(onGetsTrade);
   }
 
-  void _onGetsTrade(TradeEvent event, Emitter<TradeState> emit) async {
-    emit(state.copyWith(status: TradeStatus.loading));
-
+  void onGetsTrade(GetsTrade event, Emitter<TradeState> emit) async {
     try {
-      final trades = await tradeRepository.getsTrade();
+      emit(state.copyWith(status: TradeStatus.loading));
+
       num totalCount = 0;
       num totalPrice = 0;
+
+      final trades = await tradeRepository.getsTrade();
 
       for (Trade trade in trades) {
         if (trade.type == "buy") {
@@ -39,10 +40,7 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
           totalPrice: totalPrice,
         ),
       );
-    } catch (error, stacktrace) {
-      print(error);
-      print(stacktrace);
-
+    } catch (error) {
       emit(state.copyWith(status: TradeStatus.failure));
     }
   }

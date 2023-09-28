@@ -36,5 +36,5 @@ Future<void> main() async {
     authFlowType: AuthFlowType.pkce,
   );
 
-  runApp(const App());
+  runApp(App());
 }

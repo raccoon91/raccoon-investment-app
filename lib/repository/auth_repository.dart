@@ -3,53 +3,44 @@ import 'dart:async';
 import 'package:raccoon_investment/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-enum AuthStatus { unknown, authenticated, unauthenticated }
-
 class AuthRepository {
-  final _controller = StreamController<AuthStatus>();
-
-  Stream<AuthStatus> get status async* {
-    await Future<void>.delayed(const Duration(seconds: 1));
-    yield AuthStatus.unauthenticated;
-    yield* _controller.stream;
-  }
-
-  void authCheck({User? user}) {
+  User? getUser() {
     try {
-      if (user != null) {
-        _controller.add(AuthStatus.authenticated);
-      } else {
-        _controller.add(AuthStatus.unauthenticated);
-      }
+      final user = supabase.auth.currentUser;
+
+      return user;
+    } on PostgrestException catch (error) {
+      throw PostgrestException(message: error.message);
     } catch (error) {
-      print(error);
+      throw Exception(error);
     }
   }
 
-  Future<void> logIn({required String email, required String password}) async {
+  Future<AuthResponse> postSignIn({
+    required String email,
+    required String password,
+  }) async {
     try {
-      await supabase.auth.signInWithPassword(
+      final user = await supabase.auth.signInWithPassword(
         email: email,
         password: password,
       );
 
-      _controller.add(AuthStatus.authenticated);
+      return user;
     } catch (error) {
-      print(error);
+      throw Exception(error);
     }
   }
 
-  Future<void> logOut() async {
+  Future<bool> postSignOut() async {
     try {
       await supabase.auth.signOut();
 
-      _controller.add(AuthStatus.unauthenticated);
+      return true;
     } on AuthException catch (error) {
-      print(error.message);
+      throw AuthException(error.message);
     } catch (error) {
-      print(error);
+      throw Exception(error);
     }
   }
-
-  void dispose() => _controller.close();
 }

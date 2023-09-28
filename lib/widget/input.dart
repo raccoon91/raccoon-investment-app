@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 
 class Input extends StatefulWidget {
-  final String id;
   final String type;
   final String label;
   final IconData icon;
-  final String? error;
+  final TextEditingController controller;
   final bool? autoFocus;
-  final void Function(String)? onChanged;
 
   const Input({
     super.key,
-    required this.id,
     required this.type,
     required this.label,
     required this.icon,
-    this.error,
+    required this.controller,
     this.autoFocus,
-    this.onChanged,
   });
 
   @override
@@ -39,10 +35,9 @@ class _InputWidgetState extends State<Input> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      key: Key(widget.id),
       focusNode: focusNode,
       autofocus: widget.autoFocus ?? false,
-      onChanged: widget.onChanged,
+      controller: widget.controller,
       keyboardType: widget.type == "email"
           ? TextInputType.emailAddress
           : TextInputType.text,
@@ -50,19 +45,10 @@ class _InputWidgetState extends State<Input> {
       decoration: InputDecoration(
         labelText: widget.label,
         labelStyle: TextStyle(
-          color: widget.error != null
-              ? Colors.red
-              : focusNode.hasFocus
-                  ? Colors.teal
-                  : Colors.white,
+          color: focusNode.hasFocus ? Colors.teal : Colors.white,
         ),
-        errorText: widget.error,
         prefixIcon: Icon(widget.icon),
-        prefixIconColor: widget.error != null
-            ? Colors.red
-            : focusNode.hasFocus
-                ? Colors.teal
-                : Colors.white,
+        prefixIconColor: focusNode.hasFocus ? Colors.teal : Colors.white,
         enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8)),
           borderSide: BorderSide(color: Colors.white),
@@ -81,11 +67,7 @@ class _InputWidgetState extends State<Input> {
         ),
       ),
       style: TextStyle(
-        color: widget.error != null
-            ? Colors.red
-            : focusNode.hasFocus
-                ? Colors.teal
-                : Colors.white,
+        color: focusNode.hasFocus ? Colors.teal : Colors.white,
       ),
     );
   }
