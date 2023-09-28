@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raccoon_investment/bloc/auth/auth_bloc.dart';
+import 'package:raccoon_investment/bloc/navigation/navigation_cubit.dart';
 import 'package:raccoon_investment/repository/auth_repository.dart';
 import 'package:raccoon_investment/screen/home_screen.dart';
 import 'package:raccoon_investment/screen/login_screen.dart';
@@ -14,8 +15,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AuthBloc(authRepository: AuthRepository())..add(GetUser()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => AuthBloc(
+            authRepository: AuthRepository(),
+          )..add(GetUser()),
+        ),
+        BlocProvider(create: (_) => NavigationCubit()),
+      ],
       child: MaterialApp(
         theme: ThemeClass.theme,
         navigatorKey: _navigatorKey,
