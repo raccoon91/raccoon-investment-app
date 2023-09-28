@@ -41,6 +41,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> onPostSignIn(PostSignIn event, Emitter<AuthState> emit) async {
     try {
+      emit(state.copyWith(status: AuthStatus.loading));
+
       final res = await authRepository.postSignIn(
         email: event.email,
         password: event.password,
@@ -67,6 +69,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> onPostSignOut(PostSignOut event, Emitter<AuthState> emit) async {
     try {
+      emit(state.copyWith(status: AuthStatus.loading));
+
       await authRepository.postSignOut();
 
       emit(

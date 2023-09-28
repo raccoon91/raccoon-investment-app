@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:raccoon_investment/bloc/auth/auth_bloc.dart';
-import 'package:raccoon_investment/widget/input.dart';
+import 'package:raccoon_investment/widget/login/login_form.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   static Route<void> route() {
     return MaterialPageRoute<void>(builder: (_) => const LoginScreen());
-  }
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
   }
 
   @override
@@ -39,16 +22,16 @@ class _LoginScreenState extends State<LoginScreen> {
             constraints: BoxConstraints(
               minHeight: constraints.maxHeight,
             ),
-            child: IntrinsicHeight(
+            child: const IntrinsicHeight(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   vertical: 38,
                   horizontal: 32,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Flexible(
+                    Flexible(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -65,60 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Flexible(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Input(
-                            type: "email",
-                            label: "Email",
-                            icon: Icons.person,
-                            controller: emailController,
-                          ),
-                          const SizedBox(height: 20),
-                          Input(
-                            type: "password",
-                            label: "password",
-                            icon: Icons.lock,
-                            controller: passwordController,
-                          ),
-                          const SizedBox(height: 40),
-                          BlocBuilder<AuthBloc, AuthState>(
-                            builder: (context, state) {
-                              return SizedBox(
-                                width: double.infinity,
-                                height: 60,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    context.read<AuthBloc>().add(
-                                          PostSignIn(
-                                            emailController.text,
-                                            passwordController.text,
-                                          ),
-                                        );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.teal,
-                                    foregroundColor: Colors.white,
-                                    disabledBackgroundColor:
-                                        Colors.grey.shade400,
-                                    disabledForegroundColor:
-                                        Colors.grey.shade800,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'Login',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                      child: LoginForm(),
                     )
                   ],
                 ),

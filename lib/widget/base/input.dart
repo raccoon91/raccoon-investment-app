@@ -5,6 +5,7 @@ class Input extends StatefulWidget {
   final String label;
   final IconData icon;
   final TextEditingController controller;
+  final String? Function(String?)? validator;
   final bool? autoFocus;
 
   const Input({
@@ -13,6 +14,7 @@ class Input extends StatefulWidget {
     required this.label,
     required this.icon,
     required this.controller,
+    this.validator,
     this.autoFocus,
   });
 
@@ -34,7 +36,7 @@ class _InputWidgetState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       focusNode: focusNode,
       autofocus: widget.autoFocus ?? false,
       controller: widget.controller,
@@ -42,6 +44,7 @@ class _InputWidgetState extends State<Input> {
           ? TextInputType.emailAddress
           : TextInputType.text,
       obscureText: widget.type == "password" ? true : false,
+      validator: widget.validator,
       decoration: InputDecoration(
         labelText: widget.label,
         labelStyle: TextStyle(
