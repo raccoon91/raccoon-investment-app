@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raccoon_investment/bloc/trade/trade_bloc.dart';
-import 'package:raccoon_investment/repository/trade_repository.dart';
 import 'package:raccoon_investment/widget/base/bottom_navigation.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   static Route<void> route() {
-    return MaterialPageRoute(
-      builder: (context) => BlocProvider(
-        create: (context) => TradeBloc(
-          tradeRepository: TradeRepository(),
-        )..add(GetsTrade()),
-        child: const HomeScreen(),
-      ),
-    );
+    return MaterialPageRoute(builder: (context) => const HomeScreen());
   }
 
   @override

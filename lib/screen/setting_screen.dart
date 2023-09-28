@@ -16,29 +16,33 @@ class SettingScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Setting')),
       backgroundColor: Theme.of(context).colorScheme.background,
       bottomNavigationBar: const BottomNavigation(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Builder(
-            builder: (context) {
-              final userId = context.select(
-                (AuthBloc bloc) => bloc.state.user?.email,
-              );
-              return Text(
-                'UserID: $userId',
-                style: const TextStyle(color: Colors.white),
-              );
-            },
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            child: const Text('Logout'),
-            onPressed: () {
-              context.read<AuthBloc>().add(PostSignOut());
-            },
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 38,
+          horizontal: 32,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                final user = state.user;
+
+                return Text(
+                  'User Email: $user',
+                  style: const TextStyle(color: Colors.white),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              child: const Text('Logout'),
+              onPressed: () {
+                context.read<AuthBloc>().add(PostSignOut());
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
