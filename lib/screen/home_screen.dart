@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:raccoon_investment/bloc/trade/trade_bloc.dart';
 import 'package:raccoon_investment/widget/base/bottom_navigation.dart';
+import 'package:raccoon_investment/widget/home/stock_list.dart';
+import 'package:raccoon_investment/widget/home/total.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,68 +19,18 @@ class HomeScreen extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       bottomNavigationBar: const BottomNavigation(),
-      body: Center(
+      body: const Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 38,
+          horizontal: 32,
+        ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Total(),
+            SizedBox(height: 30),
             Flexible(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  BlocBuilder<TradeBloc, TradeState>(
-                    buildWhen: (prev, current) => current.status.isSuccess,
-                    builder: (context, state) {
-                      return Text(
-                        state.totalCount.toString(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  BlocBuilder<TradeBloc, TradeState>(
-                    buildWhen: (prev, current) => current.status.isSuccess,
-                    builder: (context, state) {
-                      return Text(
-                        state.totalPrice.toStringAsFixed(2),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Flexible(
-              flex: 2,
-              child: BlocBuilder<TradeBloc, TradeState>(
-                buildWhen: (prev, current) => current.status.isSuccess,
-                builder: (context, state) {
-                  return ListView.builder(
-                    itemCount: state.trades.length,
-                    itemBuilder: (context, index) {
-                      return Wrap(
-                        children: [
-                          Text(state.trades[index].date),
-                          Text(
-                            state.trades[index].type,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          Text(
-                            state.trades[index].count.toString(),
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              ),
+              child: StockList(),
             ),
           ],
         ),

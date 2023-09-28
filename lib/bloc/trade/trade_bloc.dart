@@ -19,18 +19,39 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
 
       num totalCount = 0;
       num totalPrice = 0;
+      Map<String, dynamic> stocks = {};
+      List<dynamic> stockList = [];
 
       final trades = await tradeRepository.getsTrade();
 
+      print(stocks.toString());
+
       for (Trade trade in trades) {
-        if (trade.type == "buy") {
+        if (stocks[trade.ticker] == null) {
+          stocks[trade.ticker] = {
+            'ticker': trade.ticker,
+            'name': trade.name,
+            'count': 0,
+            'price': 0,
+          };
+        }
+
+        if (trade.type == 'buy') {
           totalCount += trade.count;
           totalPrice += (trade.price * trade.count);
-        } else if (trade.type == "sell") {
+          stocks[trade.ticker]['count'] += trade.count;
+          stocks[trade.ticker]['price'] += (trade.price * trade.count);
+        } else if (trade.type == 'sell') {
           totalCount -= trade.count;
           totalPrice -= (trade.price * trade.count);
+          stocks[trade.ticker]['count'] -= trade.count;
+          stocks[trade.ticker]['price'] -= (trade.price * trade.count);
         }
       }
+
+      stocks.forEach((key, value) {
+        stockList.add(value);
+      });
 
       emit(
         state.copyWith(
@@ -38,6 +59,7 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
           trades: trades,
           totalCount: totalCount,
           totalPrice: totalPrice,
+          stockList: stockList,
         ),
       );
     } catch (error) {
