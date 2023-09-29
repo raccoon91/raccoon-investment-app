@@ -10,46 +10,44 @@ class StockList extends StatelessWidget {
     return BlocBuilder<TradeBloc, TradeState>(
       buildWhen: (prev, current) => current.status.isSuccess,
       builder: (context, state) {
-        return ListView.builder(
-          itemCount: state.stockList.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        state.stockList[index]['ticker'],
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        state.stockList[index]['name'],
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '${state.stockList[index]["count"]}',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '${state.stockList[index]["price"]?.toStringAsFixed(2)}',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
+        return Container(
+          height: 400,
+          color: Theme.of(context).colorScheme.surface,
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
+          child: ListView.builder(
+            itemCount: state.stockList.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(state.stockList[index]['ticker']),
+                        const SizedBox(height: 6),
+                        Text(
+                          state.stockList[index]['name'],
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text('${state.stockList[index]["count"]}'),
+                        const SizedBox(height: 6),
+                        Text(
+                          '\$ ${state.stockList[index]["price"]?.toStringAsFixed(2)}',
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         );
       },
     );

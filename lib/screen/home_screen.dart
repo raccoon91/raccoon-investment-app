@@ -19,21 +19,12 @@ class HomeScreen extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       bottomNavigationBar: const BottomNavigation(),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: 38,
-          horizontal: 32,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Total(),
-            SizedBox(height: 30),
-            Flexible(
-              child: StockList(),
-            ),
-          ],
-        ),
+      body: const Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Total(),
+          StockList(),
+        ],
       ),
     );
   }

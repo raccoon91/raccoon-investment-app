@@ -22,12 +22,10 @@ class LoginScreen extends StatelessWidget {
             constraints: BoxConstraints(
               minHeight: constraints.maxHeight,
             ),
-            child: const IntrinsicHeight(
+            child: IntrinsicHeight(
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 38,
-                  horizontal: 32,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 38, horizontal: 32),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -35,19 +33,15 @@ class LoginScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 60),
+                          const SizedBox(height: 60),
                           Text(
                             'Welcom Back !',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                         ],
                       ),
                     ),
-                    Flexible(
+                    const Flexible(
                       child: LoginForm(),
                     )
                   ],

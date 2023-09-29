@@ -28,18 +28,18 @@ class SettingScreen extends StatelessWidget {
               builder: (context, state) {
                 final email = state.user?.email;
 
-                return Text(
-                  'User Email: $email',
-                  style: const TextStyle(color: Colors.white),
-                );
+                return Text('Email: $email');
               },
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              child: const Text('Logout'),
-              onPressed: () {
-                context.read<AuthBloc>().add(PostSignOut());
-              },
+            const SizedBox(height: 30),
+            SizedBox(
+              height: 40,
+              child: ElevatedButton(
+                child: const Text('Logout'),
+                onPressed: () {
+                  context.read<AuthBloc>().add(PostSignOut());
+                },
+              ),
             ),
           ],
         ),

@@ -10,56 +10,47 @@ class Total extends StatelessWidget {
     return BlocBuilder<TradeBloc, TradeState>(
       buildWhen: (prev, current) => current.status.isSuccess,
       builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Total Investing',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12,
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Total Investing',
+                style: Theme.of(context).textTheme.bodySmall,
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '\$ ${state.totalPrice.toStringAsFixed(2)}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 30,
+              const SizedBox(height: 8),
+              Text(
+                '\$ ${state.totalPrice.toStringAsFixed(2)}',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '${state.totalCount} stocks',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(40, 40),
-                    shape: const CircleBorder(),
-                    backgroundColor: Colors.pinkAccent,
+              const SizedBox(height: 8),
+              Text('${state.totalCount} stocks'),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(40, 40),
+                      shape: const CircleBorder(),
+                      backgroundColor: Theme.of(context).colorScheme.error,
+                    ),
+                    child: const Icon(Icons.remove),
                   ),
-                  onPressed: () {},
-                  child: const Icon(Icons.remove),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(40, 40),
-                    shape: const CircleBorder(),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(40, 40),
+                      shape: const CircleBorder(),
+                    ),
+                    child: const Icon(Icons.add),
                   ),
-                  onPressed: () {},
-                  child: const Icon(Icons.add),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         );
       },
     );
