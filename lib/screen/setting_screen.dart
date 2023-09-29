@@ -26,10 +26,10 @@ class SettingScreen extends StatelessWidget {
           children: [
             BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) {
-                final user = state.user;
+                final email = state.user?.email;
 
                 return Text(
-                  'User Email: $user',
+                  'User Email: $email',
                   style: const TextStyle(color: Colors.white),
                 );
               },

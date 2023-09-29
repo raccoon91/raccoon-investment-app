@@ -23,6 +23,9 @@ class App extends StatelessWidget {
         navigatorKey: _navigatorKey,
         builder: (context, child) {
           return BlocListener<AuthBloc, AuthState>(
+            listenWhen: ((previous, current) {
+              return previous.authenticated != current.authenticated;
+            }),
             listener: (context, state) {
               switch (state.authenticated) {
                 case Authenticated.unauthenticated:

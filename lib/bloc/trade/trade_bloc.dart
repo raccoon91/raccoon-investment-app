@@ -24,8 +24,6 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
 
       final trades = await tradeRepository.getsTrade();
 
-      print(stocks.toString());
-
       for (Trade trade in trades) {
         if (stocks[trade.ticker] == null) {
           stocks[trade.ticker] = {
@@ -50,7 +48,7 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
       }
 
       stocks.forEach((key, value) {
-        stockList.add(value);
+        stockList.insert(0, value);
       });
 
       emit(

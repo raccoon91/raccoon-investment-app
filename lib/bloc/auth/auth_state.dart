@@ -14,7 +14,7 @@ extension AuthStatusX on AuthStatus {
 class AuthState extends Equatable {
   final AuthStatus status;
   final Authenticated authenticated;
-  final String? user;
+  final User? user;
 
   const AuthState({
     this.status = AuthStatus.initial,
@@ -25,7 +25,7 @@ class AuthState extends Equatable {
   AuthState copyWith({
     AuthStatus? status,
     Authenticated? authenticated,
-    String? user,
+    User? user,
   }) {
     return AuthState(
       status: status ?? this.status,
