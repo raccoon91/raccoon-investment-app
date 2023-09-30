@@ -6,8 +6,10 @@ import 'package:raccoon_investment/model/trade_model.dart';
 class TradeRepository {
   Future<List<Trade>> getsTrade() async {
     try {
-      final List data =
-          await supabase.from('trades').select('*, symbols ( * )');
+      final List data = await supabase
+          .from('trades')
+          .select('*, symbols ( * )')
+          .order("date");
 
       final List<Trade> trades =
           data.map((element) => Trade.fromJson(element)).toList();

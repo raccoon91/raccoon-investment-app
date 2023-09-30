@@ -39,7 +39,7 @@ class _LoginFormState extends State<LoginForm> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       transform: Matrix4.translationValues(0, isOpen ? 0 : 300, 0),
-      padding: const EdgeInsets.only(top: 42, right: 32, bottom: 32, left: 32),
+      padding: const EdgeInsets.only(top: 30, right: 24, left: 24),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: const BorderRadius.only(
@@ -61,7 +61,7 @@ class _LoginFormState extends State<LoginForm> {
           }
         },
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Input(
               type: 'email',

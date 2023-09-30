@@ -24,8 +24,9 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
       List<Stock> stockList = [];
 
       final trades = await tradeRepository.getsTrade();
+      final reverseTrades = trades.reversed;
 
-      for (Trade trade in trades) {
+      for (Trade trade in reverseTrades) {
         final symbol = trade.symbols;
 
         if (symbol == null) return;
@@ -51,14 +52,14 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
       }
 
       stocks.forEach((key, value) {
-        stockList.insert(0, value);
+        stockList.add(value);
       });
 
       emit(
         state.copyWith(
           status: TradeStatus.success,
           trades: trades,
-          stockList: stockList,
+          stockList: stockList.sublist(0, 4),
           totalCount: totalCount,
           totalPrice: totalPrice,
         ),

@@ -42,7 +42,7 @@ class GroupCard extends StatelessWidget {
                                 Text(fovorite.symbols?.currency ?? ""),
                               ],
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 4),
                             Text(
                               fovorite.symbols?.name ?? "",
                               style: Theme.of(context).textTheme.bodySmall,
