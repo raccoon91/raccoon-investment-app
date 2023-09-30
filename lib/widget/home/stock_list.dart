@@ -13,7 +13,7 @@ class StockList extends StatelessWidget {
         return ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 200, maxHeight: 400),
           child: Container(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -23,25 +23,24 @@ class StockList extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(state.stockList[index].ticker),
-                          const SizedBox(height: 6),
+                          Text('${state.stockList[index].count}'),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
                           Text(
                             state.stockList[index].name,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text('${state.stockList[index].count}'),
-                          const SizedBox(height: 6),
                           Text(
                             '\$ ${state.stockList[index].price.toStringAsFixed(2)}',
                           ),
