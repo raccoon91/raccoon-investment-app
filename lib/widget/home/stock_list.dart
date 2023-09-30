@@ -29,10 +29,10 @@ class StockList extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(state.stockList[index]['ticker']),
+                          Text(state.stockList[index].ticker),
                           const SizedBox(height: 6),
                           Text(
-                            state.stockList[index]['name'],
+                            state.stockList[index].name,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
@@ -40,10 +40,10 @@ class StockList extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text('${state.stockList[index]["count"]}'),
+                          Text('${state.stockList[index].count}'),
                           const SizedBox(height: 6),
                           Text(
-                            '\$ ${state.stockList[index]["price"]?.toStringAsFixed(2)}',
+                            '\$ ${state.stockList[index].price.toStringAsFixed(2)}',
                           ),
                         ],
                       ),

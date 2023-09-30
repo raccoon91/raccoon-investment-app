@@ -7,7 +7,7 @@ class TradeRepository {
   Future<List<Trade>> getsTrade() async {
     try {
       final List data =
-          await supabase.from('trades').select('*, symbol_id ( * )');
+          await supabase.from('trades').select('*, symbols ( * )');
 
       final List<Trade> trades =
           data.map((element) => Trade.fromJson(element)).toList();

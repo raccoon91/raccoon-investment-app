@@ -12,16 +12,16 @@ extension TradeStatusX on TradeStatus {
 class TradeState extends Equatable {
   final TradeStatus status;
   final List<Trade> trades;
+  final List<Stock> stockList;
   final num totalCount;
   final num totalPrice;
-  final List stockList;
 
   const TradeState({
     this.status = TradeStatus.initial,
     List<Trade>? trades,
+    List<Stock>? stockList,
     num? totalCount,
     num? totalPrice,
-    List? stockList,
   })  : trades = trades ?? const [],
         totalCount = totalCount ?? 0,
         totalPrice = totalPrice ?? 0,
@@ -30,16 +30,16 @@ class TradeState extends Equatable {
   TradeState copyWith({
     TradeStatus? status,
     List<Trade>? trades,
+    List<Stock>? stockList,
     num? totalCount,
     num? totalPrice,
-    List? stockList,
   }) {
     return TradeState(
       status: status ?? this.status,
       trades: trades ?? this.trades,
+      stockList: stockList ?? this.stockList,
       totalCount: totalCount ?? this.totalCount,
       totalPrice: totalPrice ?? this.totalPrice,
-      stockList: stockList ?? this.stockList,
     );
   }
 
