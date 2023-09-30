@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raccoon_investment/bloc/auth/auth_bloc.dart';
 import 'package:raccoon_investment/widget/login/login_form.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -11,10 +13,6 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-        automaticallyImplyLeading: false,
-      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
@@ -23,29 +21,35 @@ class LoginScreen extends StatelessWidget {
               minHeight: constraints.maxHeight,
             ),
             child: IntrinsicHeight(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 38, horizontal: 32),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Flexible(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: 60),
-                          Text(
-                            'Welcom Back !',
-                            style: Theme.of(context).textTheme.headlineLarge,
-                          ),
-                        ],
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Welcom Back !',
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                      ],
                     ),
-                    const Flexible(
-                      child: LoginForm(),
-                    )
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 300,
+                    child: BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        if (state.status.isLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        return const LoginForm();
+                      },
+                    ),
+                  )
+                ],
               ),
             ),
           ),

@@ -123,13 +123,6 @@ class ThemeClass {
         borderSide: BorderSide(color: _themeClass.error),
       ),
     ),
-    appBarTheme: AppBarTheme(
-      titleTextStyle: TextStyle(
-        color: _themeClass.text,
-        fontSize: 20,
-      ),
-      backgroundColor: _themeClass.primaryContainer,
-    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: _themeClass.surface,
       unselectedItemColor: _themeClass.outline,
