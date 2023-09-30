@@ -15,12 +15,16 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       bottomNavigationBar: const BottomNavigation(),
-      body: const Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Total(),
-          StockList(),
-        ],
+      body: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Total(),
+            SizedBox(height: 12),
+            StockList(),
+          ],
+        ),
       ),
     );
   }

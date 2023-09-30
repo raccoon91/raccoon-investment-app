@@ -10,8 +10,12 @@ class Total extends StatelessWidget {
     return BlocBuilder<TradeBloc, TradeState>(
       buildWhen: (prev, current) => current.status.isSuccess,
       builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 32),
+        return Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -19,14 +23,13 @@ class Total extends StatelessWidget {
                 'Total Investing',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               Text(
                 '\$ ${state.totalPrice.toStringAsFixed(2)}',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: 8),
               Text('${state.totalCount} stocks'),
-              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

@@ -10,43 +10,48 @@ class StockList extends StatelessWidget {
     return BlocBuilder<TradeBloc, TradeState>(
       buildWhen: (prev, current) => current.status.isSuccess,
       builder: (context, state) {
-        return Container(
-          height: 400,
-          color: Theme.of(context).colorScheme.surface,
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 32),
-          child: ListView.builder(
-            itemCount: state.stockList.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(state.stockList[index]['ticker']),
-                        const SizedBox(height: 6),
-                        Text(
-                          state.stockList[index]['name'],
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('${state.stockList[index]["count"]}'),
-                        const SizedBox(height: 6),
-                        Text(
-                          '\$ ${state.stockList[index]["price"]?.toStringAsFixed(2)}',
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
+        return ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 200, maxHeight: 400),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+            ),
+            child: ListView.builder(
+              itemCount: state.stockList.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(state.stockList[index]['ticker']),
+                          const SizedBox(height: 6),
+                          Text(
+                            state.stockList[index]['name'],
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text('${state.stockList[index]["count"]}'),
+                          const SizedBox(height: 6),
+                          Text(
+                            '\$ ${state.stockList[index]["price"]?.toStringAsFixed(2)}',
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         );
       },

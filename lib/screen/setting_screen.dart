@@ -16,30 +16,61 @@ class SettingScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       bottomNavigationBar: const BottomNavigation(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 38,
-          horizontal: 32,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            BlocBuilder<AuthBloc, AuthState>(
-              builder: (context, state) {
-                final email = state.user?.email;
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    "User",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 20),
+                  BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      final email = state.user?.email;
 
-                return Text('Email: $email');
-              },
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              height: 40,
-              child: ElevatedButton(
-                child: const Text('Logout'),
-                onPressed: () {
-                  context.read<AuthBloc>().add(PostSignOut());
-                },
+                      return Text('Email: $email');
+                    },
+                  ),
+                ],
               ),
             ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    "Logout",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 40,
+                    child: ElevatedButton(
+                      child: const Text('Logout'),
+                      onPressed: () {
+                        context.read<AuthBloc>().add(PostSignOut());
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
