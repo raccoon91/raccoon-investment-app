@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raccoon_investment/bloc/group/group_bloc.dart';
 import 'package:raccoon_investment/bloc/navigation/navigation_cubit.dart';
 import 'package:raccoon_investment/bloc/trade/trade_bloc.dart';
+import 'package:raccoon_investment/repository/group_repository.dart';
 import 'package:raccoon_investment/repository/trade_repository.dart';
 import 'package:raccoon_investment/screen/home_screen.dart';
 import 'package:raccoon_investment/screen/setting_screen.dart';
@@ -21,6 +23,11 @@ class MainScreen extends StatelessWidget {
           create: (context) => TradeBloc(
             tradeRepository: TradeRepository(),
           )..add(GetsTrade()),
+        ),
+        BlocProvider(
+          create: (context) => GroupBloc(
+            groupRepository: GroupRepository(),
+          )..add(GetsGroup()),
         ),
         BlocProvider(create: (_) => NavigationCubit()),
       ],
