@@ -1,6 +1,6 @@
 part of 'navigation_cubit.dart';
 
-enum NavigationMenu { home, settings }
+enum NavigationMenu { home, trade, chart, setting }
 
 class NavigationState extends Equatable {
   final NavigationMenu menu;

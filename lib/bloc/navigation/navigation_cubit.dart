@@ -14,11 +14,12 @@ class NavigationCubit extends Cubit<NavigationState> {
           index: 0,
         ));
         break;
-      case NavigationMenu.settings:
+      case NavigationMenu.setting:
         emit(state.copyWith(
-          menu: NavigationMenu.settings,
-          index: 1,
+          menu: NavigationMenu.setting,
+          index: 3,
         ));
+      default:
         break;
     }
   }

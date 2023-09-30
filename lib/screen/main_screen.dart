@@ -36,7 +36,7 @@ class MainScreen extends StatelessWidget {
           switch (state.menu) {
             case NavigationMenu.home:
               return const HomeScreen();
-            case NavigationMenu.settings:
+            case NavigationMenu.setting:
               return const SettingScreen();
             default:
               return Container();

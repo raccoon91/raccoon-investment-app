@@ -10,14 +10,23 @@ class BottomNavigation extends StatelessWidget {
     return BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
         return BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.attach_money),
+              label: 'Trade',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.show_chart),
+              label: 'Chart',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              label: 'Settings',
+              label: 'Setting',
             ),
           ],
           currentIndex: state.index,
@@ -25,8 +34,8 @@ class BottomNavigation extends StatelessWidget {
           onTap: (index) {
             if (index == 0) {
               context.read<NavigationCubit>().navigate(NavigationMenu.home);
-            } else if (index == 1) {
-              context.read<NavigationCubit>().navigate(NavigationMenu.settings);
+            } else if (index == 3) {
+              context.read<NavigationCubit>().navigate(NavigationMenu.setting);
             }
           },
         );
