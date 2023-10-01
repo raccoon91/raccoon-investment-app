@@ -61,7 +61,7 @@ class _LoginFormState extends State<LoginForm> {
           }
         },
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Input(
               type: 'email',
@@ -78,7 +78,6 @@ class _LoginFormState extends State<LoginForm> {
             ),
             const SizedBox(height: 40),
             SizedBox(
-              width: double.infinity,
               height: 50,
               child: ElevatedButton(
                 onPressed: isValid
