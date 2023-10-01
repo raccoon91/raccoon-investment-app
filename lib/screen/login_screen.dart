@@ -36,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 300,
+                    height: 280,
                     child: BlocBuilder<AuthBloc, AuthState>(
                       builder: (context, state) {
                         if (state.status.isLoading) {

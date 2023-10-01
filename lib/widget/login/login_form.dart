@@ -38,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      transform: Matrix4.translationValues(0, isOpen ? 0 : 300, 0),
+      transform: Matrix4.translationValues(0, isOpen ? 0 : 280, 0),
       padding: const EdgeInsets.only(top: 30, right: 24, left: 24),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
@@ -69,7 +69,7 @@ class _LoginFormState extends State<LoginForm> {
               icon: Icons.person,
               controller: emailController,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Input(
               type: 'password',
               label: 'password',
@@ -79,7 +79,7 @@ class _LoginFormState extends State<LoginForm> {
             const SizedBox(height: 40),
             SizedBox(
               width: double.infinity,
-              height: 60,
+              height: 50,
               child: ElevatedButton(
                 onPressed: isValid
                     ? () {
