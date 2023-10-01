@@ -33,7 +33,7 @@ class Input extends StatelessWidget {
         controller: controller,
         keyboardType: type == 'email'
             ? TextInputType.emailAddress
-            : type == "number"
+            : type == 'number'
                 ? TextInputType.number
                 : TextInputType.text,
         obscureText: type == 'password' ? true : false,

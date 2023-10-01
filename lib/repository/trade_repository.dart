@@ -9,7 +9,7 @@ class TradeRepository {
       final List data = await supabase
           .from('trades')
           .select('*, symbols ( * )')
-          .order("date");
+          .order('date');
 
       final List<Trade> trades =
           data.map((element) => Trade.fromJson(element)).toList();
