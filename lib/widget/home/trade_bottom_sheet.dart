@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:raccoon_investment/bloc/auth/auth_bloc.dart';
+import 'package:raccoon_investment/bloc/favorite/favorite_bloc.dart';
 import 'package:raccoon_investment/bloc/trade/trade_bloc.dart';
+import 'package:raccoon_investment/model/option_model.dart';
+import 'package:raccoon_investment/widget/base/dropdown.dart';
 import 'package:raccoon_investment/widget/base/input.dart';
 
 class TradeBottomSheet extends StatefulWidget {
@@ -19,6 +22,7 @@ class TradeBottomSheet extends StatefulWidget {
 
 class _TradeBottomSheetState extends State<TradeBottomSheet> {
   String? type;
+  String? symbolId;
   final dateController = TextEditingController();
   final priceController = TextEditingController();
   final countController = TextEditingController();
@@ -47,7 +51,7 @@ class _TradeBottomSheetState extends State<TradeBottomSheet> {
     super.dispose();
   }
 
-  onPressSell() {
+  onPressedSell() {
     textController.text = 'sell';
 
     setState(() {
@@ -55,11 +59,17 @@ class _TradeBottomSheetState extends State<TradeBottomSheet> {
     });
   }
 
-  onPressBuy() {
+  onPressedBuy() {
     textController.text = 'buy';
 
     setState(() {
       type = 'buy';
+    });
+  }
+
+  onChangedSymbol(String? value) {
+    setState(() {
+      symbolId = value;
     });
   }
 
@@ -112,7 +122,7 @@ class _TradeBottomSheetState extends State<TradeBottomSheet> {
                   width: (MediaQuery.of(context).size.width / 2) - 34,
                   height: 40,
                   child: ElevatedButton(
-                    onPressed: onPressSell,
+                    onPressed: onPressedSell,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: type == 'sell'
                           ? Theme.of(context).colorScheme.error
@@ -132,7 +142,7 @@ class _TradeBottomSheetState extends State<TradeBottomSheet> {
                   width: (MediaQuery.of(context).size.width / 2) - 34,
                   height: 40,
                   child: ElevatedButton(
-                    onPressed: onPressBuy,
+                    onPressed: onPressedBuy,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: type == 'buy'
                           ? Theme.of(context).colorScheme.primary
@@ -157,24 +167,34 @@ class _TradeBottomSheetState extends State<TradeBottomSheet> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 10),
-                    // Input(
-                    //   type: 'text',
-                    //   label: 'Symbol',
-                    //   controller: typeController,
-                    // ),
-                    // const SizedBox(height: 20),
+                    BlocBuilder<FavoriteBloc, FavoriteState>(
+                      builder: (context, state) {
+                        return Dropdown(
+                          hint: 'Symbol',
+                          value: symbolId,
+                          options: state.favorites.map((favorite) {
+                            return Option.fromJson({
+                              'label': favorite.symbols?.name,
+                              'value': '${favorite.symbols?.id}',
+                            });
+                          }).toList(),
+                          onChanged: onChangedSymbol,
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Input(
-                          width: MediaQuery.of(context).size.width - 124,
+                          width: MediaQuery.of(context).size.width - 114,
                           type: 'text',
                           label: 'Date',
                           controller: dateController,
                         ),
                         SizedBox(
-                          width: 70,
+                          width: 60,
                           height: 44,
                           child: ElevatedButton(
                             onPressed: () {
@@ -244,21 +264,23 @@ class _TradeBottomSheetState extends State<TradeBottomSheet> {
                         return SizedBox(
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: (type != null && isValid)
-                                ? () {
-                                    context.read<TradeBloc>().add(
-                                          PostTrade(
-                                            state.user?.id,
-                                            type,
-                                            dateController.text,
-                                            priceController.text,
-                                            countController.text,
-                                            commissionController.text,
-                                            textController.text,
-                                          ),
-                                        );
-                                  }
-                                : null,
+                            onPressed:
+                                (type != null && symbolId != null && isValid)
+                                    ? () {
+                                        context.read<TradeBloc>().add(
+                                              PostTrade(
+                                                state.user?.id,
+                                                type,
+                                                symbolId,
+                                                dateController.text,
+                                                priceController.text,
+                                                countController.text,
+                                                commissionController.text,
+                                                textController.text,
+                                              ),
+                                            );
+                                      }
+                                    : null,
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   Theme.of(context).colorScheme.primary,

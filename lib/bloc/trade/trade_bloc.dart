@@ -77,6 +77,7 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
       print(' === === === ===');
       print(event.userId);
       print(event.type);
+      print(event.symbolId);
       print(event.date);
       print(event.price.toString());
       print(event.count.toString());

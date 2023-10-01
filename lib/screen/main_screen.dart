@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raccoon_investment/bloc/favorite/favorite_bloc.dart';
 import 'package:raccoon_investment/bloc/group/group_bloc.dart';
 import 'package:raccoon_investment/bloc/navigation/navigation_cubit.dart';
 import 'package:raccoon_investment/bloc/trade/trade_bloc.dart';
+import 'package:raccoon_investment/repository/favorite_repository.dart';
 import 'package:raccoon_investment/repository/group_repository.dart';
 import 'package:raccoon_investment/repository/trade_repository.dart';
 import 'package:raccoon_investment/screen/home_screen.dart';
@@ -28,6 +30,11 @@ class MainScreen extends StatelessWidget {
           create: (context) => GroupBloc(
             groupRepository: GroupRepository(),
           )..add(GetsGroup()),
+        ),
+        BlocProvider(
+          create: (context) => FavoriteBloc(
+            favoriteRepository: FavoriteRepository(),
+          )..add(GetsFavorite()),
         ),
         BlocProvider(create: (_) => NavigationCubit()),
       ],
