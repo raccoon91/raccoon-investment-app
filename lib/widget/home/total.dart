@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raccoon_investment/bloc/trade/trade_bloc.dart';
+import 'package:raccoon_investment/widget/home/trade_bottom_sheet.dart';
 
 class Total extends StatelessWidget {
   const Total({super.key});
@@ -34,7 +35,14 @@ class Total extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return const TradeBottomSheet(type: 'sell');
+                        },
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(40, 40),
                       shape: const CircleBorder(),
@@ -43,7 +51,14 @@ class Total extends StatelessWidget {
                     child: const Icon(Icons.remove),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return const TradeBottomSheet(type: 'buy');
+                        },
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(40, 40),
                       shape: const CircleBorder(),

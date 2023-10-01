@@ -12,6 +12,7 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
 
   TradeBloc({required this.tradeRepository}) : super(const TradeState()) {
     on<GetsTrade>(onGetsTrade);
+    on<PostTrade>(onPostTrade);
   }
 
   void onGetsTrade(GetsTrade event, Emitter<TradeState> emit) async {
@@ -64,6 +65,25 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
           totalPrice: totalPrice,
         ),
       );
+    } catch (error) {
+      emit(state.copyWith(status: TradeStatus.failure));
+    }
+  }
+
+  Future<void> onPostTrade(PostTrade event, Emitter<TradeState> emit) async {
+    try {
+      emit(state.copyWith(status: TradeStatus.loading));
+
+      print(' === === === ===');
+      print(event.userId);
+      print(event.type);
+      print(event.date);
+      print(event.price.toString());
+      print(event.count.toString());
+      print(event.commission.toString());
+      print(event.text);
+
+      emit(state.copyWith(status: TradeStatus.success));
     } catch (error) {
       emit(state.copyWith(status: TradeStatus.failure));
     }
