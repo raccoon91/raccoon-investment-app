@@ -9,8 +9,8 @@ class GroupRepository {
       final List data = await supabase
           .from('groups')
           .select('*, favorites ( *, symbols ( * ))')
-          .order('order')
-          .order('order', foreignTable: 'favorites');
+          .order('order', ascending: true)
+          .order('order', foreignTable: 'favorites', ascending: true);
 
       final List<Group> groups =
           data.map((element) => Group.fromJson(element)).toList();

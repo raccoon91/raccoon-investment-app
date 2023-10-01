@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ThemeClass {
-  Color primary = const Color(0xff53dbc9);
+  Color primary = const Color(0xff81e6d9);
   Color primaryContainer = const Color(0xff005048);
   Color secondary = const Color(0xffb1ccc6);
   Color secondaryContainer = const Color(0xff334b47);
   Color error = const Color(0xffffb4ab);
   Color errorContainer = const Color(0xff93000a);
   Color background = const Color(0xff191c1b);
-  Color outline = const Color(0xff899390);
-  Color surface = const Color(0xff2d3130);
+  Color outline = const Color(0xffb8b8b8);
+  Color surface = const Color(0xff1a202c);
   Color text = const Color(0xffe0e3e1);
   Color caption = const Color(0xff899390);
   Color onPrimary = const Color(0xff003731);

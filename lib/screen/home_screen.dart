@@ -25,7 +25,6 @@ class HomeScreen extends StatelessWidget {
               Total(),
               SizedBox(height: 12),
               StockList(),
-              SizedBox(height: 12),
               GroupList(),
             ],
           ),
