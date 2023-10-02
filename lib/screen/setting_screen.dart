@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:raccoon_investment/bloc/auth/auth_bloc.dart';
 import 'package:raccoon_investment/widget/base/bottom_navigation.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
 
   static Route<void> route() {
     return MaterialPageRoute(builder: (context) => const SettingScreen());
+  }
+
+  @override
+  State<SettingScreen> createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
+  String appName = '';
+  String version = '';
+  String buildNumber = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      setState(() {
+        appName = packageInfo.appName;
+        version = packageInfo.version;
+        buildNumber = packageInfo.buildNumber;
+      });
+    });
   }
 
   @override
@@ -33,13 +56,68 @@ class SettingScreen extends StatelessWidget {
                     'User',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 28),
                   BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
                       final email = state.user?.email;
 
-                      return Text('Email: $email');
+                      return Row(
+                        children: [
+                          const SizedBox(
+                            width: 120,
+                            child: Text('Email'),
+                          ),
+                          Text(email ?? ''),
+                        ],
+                      );
                     },
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'App',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 28),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 120,
+                        child: Text('App Name'),
+                      ),
+                      Text(appName),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 120,
+                        child: Text('Version'),
+                      ),
+                      Text(version),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 120,
+                        child: Text('Build Number'),
+                      ),
+                      Text(buildNumber),
+                    ],
                   ),
                 ],
               ),
@@ -58,7 +136,7 @@ class SettingScreen extends StatelessWidget {
                     'Logout',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 28),
                   SizedBox(
                     height: 40,
                     child: ElevatedButton(
