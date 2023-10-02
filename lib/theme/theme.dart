@@ -7,9 +7,9 @@ class ThemeClass {
   Color secondaryContainer = const Color(0xff334b47);
   Color error = const Color(0xffffb4ab);
   Color errorContainer = const Color(0xff93000a);
-  Color background = const Color(0xff191c1b);
-  Color outline = const Color(0xffb8b8b8);
-  Color surface = const Color(0xff1a202c);
+  Color background = const Color(0xff181c1c);
+  Color outline = const Color(0xffb4c4c4);
+  Color surface = const Color(0xff1b2424);
   Color text = const Color(0xffe0e3e1);
   Color caption = const Color(0xff899390);
   Color onPrimary = const Color(0xff003731);
