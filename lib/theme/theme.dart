@@ -123,6 +123,10 @@ class ThemeClass {
         borderSide: BorderSide(color: _themeClass.error),
       ),
     ),
+    appBarTheme: AppBarTheme(
+      foregroundColor: _themeClass.outline,
+      backgroundColor: _themeClass.surface,
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: _themeClass.surface,
       unselectedItemColor: _themeClass.outline,

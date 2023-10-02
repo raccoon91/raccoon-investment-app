@@ -14,6 +14,11 @@ class NavigationCubit extends Cubit<NavigationState> {
           index: 0,
         ));
         break;
+      case NavigationMenu.chart:
+        emit(state.copyWith(
+          menu: NavigationMenu.chart,
+          index: 2,
+        ));
       case NavigationMenu.setting:
         emit(state.copyWith(
           menu: NavigationMenu.setting,
