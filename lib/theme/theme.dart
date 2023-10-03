@@ -124,8 +124,9 @@ class ThemeClass {
       ),
     ),
     appBarTheme: AppBarTheme(
+      elevation: 0,
       foregroundColor: _themeClass.outline,
-      backgroundColor: _themeClass.surface,
+      backgroundColor: _themeClass.background,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: _themeClass.surface,
