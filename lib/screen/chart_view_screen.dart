@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:raccoon_investment/bloc/favorite/favorite_bloc.dart';
-import 'package:raccoon_investment/repository/favorite_repository.dart';
+import 'package:raccoon_investment/bloc/chart/chart_bloc.dart';
+import 'package:raccoon_investment/repository/chart_repository.dart';
 
 class ChartViewScreen extends StatelessWidget {
-  const ChartViewScreen({super.key});
+  final String? ticker;
+  final String? type;
 
-  static Route<void> route() {
+  const ChartViewScreen({super.key, this.ticker, this.type});
+
+  static Route<void> route(String? ticker, String? type) {
     return MaterialPageRoute(builder: (context) {
       return BlocProvider(
-        create: (context) => FavoriteBloc(
-          favoriteRepository: FavoriteRepository(),
+        create: (context) => ChartBloc(
+          chartRepository: ChartRepository(),
         ),
-        child: const ChartViewScreen(),
+        child: ChartViewScreen(ticker: ticker, type: type),
       );
     });
   }
@@ -21,58 +24,72 @@ class ChartViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.cloud_download_outlined),
+            tooltip: 'sync chart data',
+            onPressed: () {
+              context.read<ChartBloc>().add(SyncChart(ticker, type));
+            },
+          ),
+        ],
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 12),
-          child: BlocBuilder<FavoriteBloc, FavoriteState>(
-            buildWhen: (previous, current) {
-              return current.status.isSuccess;
-            },
-            builder: (context, state) {
-              return InAppWebView(
-                initialFile: 'assets/chart.html',
-                initialOptions: InAppWebViewGroupOptions(
-                  crossPlatform: InAppWebViewOptions(
-                    transparentBackground: true,
-                  ),
+          child: Column(
+            children: [
+              Flexible(
+                child: BlocBuilder<ChartBloc, ChartState>(
+                  buildWhen: (previous, current) {
+                    return current.values.isNotEmpty;
+                  },
+                  builder: (context, state) {
+                    return state.values.isEmpty
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 200,
+                            child: const Center(
+                              child: Text("No chart data"),
+                            ),
+                          )
+                        : SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 500,
+                            child: InAppWebView(
+                              initialFile: 'assets/chart.html',
+                              initialOptions: InAppWebViewGroupOptions(
+                                crossPlatform: InAppWebViewOptions(
+                                  transparentBackground: true,
+                                ),
+                              ),
+                              onWebViewCreated: (controller) {
+                                controller.addJavaScriptHandler(
+                                  handlerName: 'chartData',
+                                  callback: (args) {
+                                    return state.values.map((value) {
+                                      return {
+                                        'time': value.datetime,
+                                        'open': num.parse(value.open),
+                                        'high': num.parse(value.high),
+                                        'low': num.parse(value.low),
+                                        'close': num.parse(value.close),
+                                      };
+                                    }).toList();
+                                  },
+                                );
+                              },
+                              onConsoleMessage: (controller, consoleMessage) {
+                                print(consoleMessage.message);
+                              },
+                            ),
+                          );
+                  },
                 ),
-                onWebViewCreated: (controller) {
-                  controller.addJavaScriptHandler(
-                    handlerName: 'chartData',
-                    callback: (args) {
-                      return [
-                        {
-                          'time': '2018-12-22',
-                          'open': 75.16,
-                          'high': 82.84,
-                          'low': 36.16,
-                          'close': 45.72
-                        },
-                        {
-                          'time': '2018-12-23',
-                          'open': 45.12,
-                          'high': 53.90,
-                          'low': 45.12,
-                          'close': 48.09
-                        },
-                        {
-                          'time': '2018-12-24',
-                          'open': 60.71,
-                          'high': 60.71,
-                          'low': 53.39,
-                          'close': 59.29
-                        },
-                      ];
-                    },
-                  );
-                },
-                onConsoleMessage: (controller, consoleMessage) {
-                  print(consoleMessage.message);
-                },
-              );
-            },
+              ),
+            ],
           ),
         ),
       ),

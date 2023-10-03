@@ -29,7 +29,10 @@ class ChartScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          ChartViewScreen.route(),
+                          ChartViewScreen.route(
+                            favorite.symbols?.ticker,
+                            favorite.symbols?.type,
+                          ),
                         );
                       },
                       child: Container(

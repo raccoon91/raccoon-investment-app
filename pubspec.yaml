@@ -35,9 +35,11 @@ dependencies:
   flutter_bloc: ^8.1.1
   flutter_dotenv: ^5.0.2
   flutter_inappwebview: ^5.7.2+3
+  http: ^1.1.0
   intl: ^0.18.1
   package_info_plus: ^4.1.0
   supabase_flutter: ^1.10.3
+
 
 dev_dependencies:
   flutter_test:
