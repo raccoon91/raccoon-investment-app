@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -47,45 +48,65 @@ class ChartViewScreen extends StatelessWidget {
                     return current.values.isNotEmpty;
                   },
                   builder: (context, state) {
-                    return state.values.isEmpty
-                        ? SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 200,
-                            child: const Center(
-                              child: Text("No chart data"),
-                            ),
-                          )
-                        : SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 500,
-                            child: InAppWebView(
-                              initialFile: 'assets/chart.html',
-                              initialOptions: InAppWebViewGroupOptions(
-                                crossPlatform: InAppWebViewOptions(
-                                  transparentBackground: true,
-                                ),
+                    if (state.values.isEmpty) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 200,
+                        child: const Center(
+                          child: Text("No chart data"),
+                        ),
+                      );
+                    }
+
+                    if (kIsWeb) {
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: state.values.map((value) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 36,
                               ),
-                              onWebViewCreated: (controller) {
-                                controller.addJavaScriptHandler(
-                                  handlerName: 'chartData',
-                                  callback: (args) {
-                                    return state.values.map((value) {
-                                      return {
-                                        'time': value.datetime,
-                                        'open': num.parse(value.open),
-                                        'high': num.parse(value.high),
-                                        'low': num.parse(value.low),
-                                        'close': num.parse(value.close),
-                                      };
-                                    }).toList();
-                                  },
-                                );
-                              },
-                              onConsoleMessage: (controller, consoleMessage) {
-                                print(consoleMessage.message);
-                              },
+                              child: Text(
+                                '${value.datetime}, ${value.high}, ${value.low}',
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    } else {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 500,
+                        child: InAppWebView(
+                          initialFile: 'assets/chart.html',
+                          initialOptions: InAppWebViewGroupOptions(
+                            crossPlatform: InAppWebViewOptions(
+                              transparentBackground: true,
                             ),
-                          );
+                          ),
+                          onWebViewCreated: (controller) {
+                            controller.addJavaScriptHandler(
+                              handlerName: 'chartData',
+                              callback: (args) {
+                                return state.values.map((value) {
+                                  return {
+                                    'time': value.datetime,
+                                    'open': num.parse(value.open),
+                                    'high': num.parse(value.high),
+                                    'low': num.parse(value.low),
+                                    'close': num.parse(value.close),
+                                  };
+                                }).toList();
+                              },
+                            );
+                          },
+                          onConsoleMessage: (controller, consoleMessage) {
+                            print(consoleMessage.message);
+                          },
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
