@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:intl/intl.dart';
 import 'package:raccoon_investment/bloc/chart/chart_bloc.dart';
 import 'package:raccoon_investment/repository/chart_repository.dart';
 
@@ -53,7 +54,7 @@ class ChartViewScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         height: 200,
                         child: const Center(
-                          child: Text("No chart data"),
+                          child: Text('No chart data'),
                         ),
                       );
                     }
@@ -68,7 +69,11 @@ class ChartViewScreen extends StatelessWidget {
                                 horizontal: 36,
                               ),
                               child: Text(
-                                '${value.datetime}, ${value.high}, ${value.low}',
+                                '${DateFormat('yyyy-MM-dd').format(
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                    value.timestamp,
+                                  ),
+                                )}, ${value.high}, ${value.low}',
                               ),
                             );
                           }).toList(),
@@ -89,19 +94,27 @@ class ChartViewScreen extends StatelessWidget {
                             controller.addJavaScriptHandler(
                               handlerName: 'chartData',
                               callback: (args) {
-                                return state.values.map((value) {
+                                final chartValues =
+                                    state.values.reversed.map((value) {
                                   return {
-                                    'time': value.datetime,
-                                    'open': num.parse(value.open),
-                                    'high': num.parse(value.high),
-                                    'low': num.parse(value.low),
-                                    'close': num.parse(value.close),
+                                    'time': DateFormat('yyyy-MM-dd').format(
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                        value.timestamp,
+                                      ),
+                                    ),
+                                    'open': value.open,
+                                    'high': value.high,
+                                    'low': value.low,
+                                    'close': value.close,
                                   };
                                 }).toList();
+
+                                return chartValues;
                               },
                             );
                           },
                           onConsoleMessage: (controller, consoleMessage) {
+                            print("webview message");
                             print(consoleMessage.message);
                           },
                         ),

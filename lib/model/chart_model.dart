@@ -1,5 +1,5 @@
 class ChartMeta {
-  final String symbol;
+  final String ticker;
   final String interval;
   final String currency;
   final String exchangeTimezone;
@@ -8,7 +8,7 @@ class ChartMeta {
   final String type;
 
   const ChartMeta({
-    required this.symbol,
+    required this.ticker,
     required this.interval,
     required this.currency,
     required this.exchangeTimezone,
@@ -19,7 +19,7 @@ class ChartMeta {
 
   factory ChartMeta.fromJson(Map<String, dynamic> json) {
     return ChartMeta(
-      symbol: json['symbol'],
+      ticker: json['symbol'],
       interval: json['interval'],
       currency: json['currency'],
       exchangeTimezone: json['exchange_timezone'],
@@ -31,15 +31,15 @@ class ChartMeta {
 }
 
 class ChartValue {
-  final String datetime;
-  final String open;
-  final String high;
-  final String low;
-  final String close;
-  final String volume;
+  final int timestamp;
+  final double open;
+  final double high;
+  final double low;
+  final double close;
+  final int volume;
 
   const ChartValue({
-    required this.datetime,
+    required this.timestamp,
     required this.open,
     required this.high,
     required this.low,
@@ -49,12 +49,12 @@ class ChartValue {
 
   factory ChartValue.fromJson(Map<String, dynamic> json) {
     return ChartValue(
-      datetime: json['datetime'],
-      open: json['open'],
-      high: json['high'],
-      low: json['low'],
-      close: json['close'],
-      volume: json['volume'],
+      timestamp: DateTime.parse(json['datetime']).millisecondsSinceEpoch,
+      open: double.parse(json['open']),
+      high: double.parse(json['high']),
+      low: double.parse(json['low']),
+      close: double.parse(json['close']),
+      volume: int.parse(json['volume']),
     );
   }
 }

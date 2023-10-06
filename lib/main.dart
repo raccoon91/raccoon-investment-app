@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:raccoon_investment/app.dart';
+import 'package:raccoon_investment/db/drift.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;
+late Drift drfit;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +17,8 @@ Future<void> main() async {
     anonKey: dotenv.env['SUPABASE_API_KEY']!,
     authFlowType: AuthFlowType.pkce,
   );
+
+  drfit = Drift();
 
   runApp(App());
 }
