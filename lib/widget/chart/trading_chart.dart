@@ -17,7 +17,7 @@ class TradingChart extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 500,
       child: InAppWebView(
-        initialFile: 'assets/chart.html',
+        initialFile: 'assets/web/chart.html',
         initialOptions: InAppWebViewGroupOptions(
           crossPlatform: InAppWebViewOptions(
             transparentBackground: true,
