@@ -1,35 +1,34 @@
 part of 'chart_bloc.dart';
 
-enum ChartStatus { initial, loading, success, failure }
+enum ChartStatus { initial, loading, success, empty, failure }
 
 extension ChartStatusX on ChartStatus {
   bool get isInitial => this == ChartStatus.initial;
   bool get isLoading => this == ChartStatus.loading;
   bool get isSuccess => this == ChartStatus.success;
+  bool get isEmpty => this == ChartStatus.empty;
   bool get isFailure => this == ChartStatus.failure;
 }
 
 class ChartState extends Equatable {
   final ChartStatus status;
-  final ChartMeta? meta;
-  final List<ChartValue> values;
+  final List<ValueTableData> values;
 
   ChartState({
     this.status = ChartStatus.initial,
-    Chart? chartData,
-  })  : meta = chartData?.meta,
-        values = chartData?.values ?? const [];
+    List<ValueTableData>? chartValues,
+  }) : values = chartValues ?? [];
 
   ChartState copyWith({
     ChartStatus? status,
-    Chart? chartData,
+    List<ValueTableData>? chartValues,
   }) {
     return ChartState(
       status: status ?? this.status,
-      chartData: chartData,
+      chartValues: chartValues,
     );
   }
 
   @override
-  List<Object?> get props => [status, meta, values];
+  List<Object?> get props => [status, values];
 }

@@ -216,12 +216,12 @@ class $ValueTableTable extends ValueTable
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ValueTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _timestampMeta =
-      const VerificationMeta('timestamp');
+  static const VerificationMeta _datetimeMeta =
+      const VerificationMeta('datetime');
   @override
-  late final GeneratedColumn<int> timestamp = GeneratedColumn<int>(
-      'timestamp', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+  late final GeneratedColumn<String> datetime = GeneratedColumn<String>(
+      'datetime', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _openMeta = const VerificationMeta('open');
   @override
   late final GeneratedColumn<double> open = GeneratedColumn<double>(
@@ -257,7 +257,7 @@ class $ValueTableTable extends ValueTable
           GeneratedColumn.constraintIsAlways('REFERENCES meta_table (id)'));
   @override
   List<GeneratedColumn> get $columns =>
-      [timestamp, open, high, low, close, volume, symbol];
+      [datetime, open, high, low, close, volume, symbol];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -268,11 +268,11 @@ class $ValueTableTable extends ValueTable
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('timestamp')) {
-      context.handle(_timestampMeta,
-          timestamp.isAcceptableOrUnknown(data['timestamp']!, _timestampMeta));
+    if (data.containsKey('datetime')) {
+      context.handle(_datetimeMeta,
+          datetime.isAcceptableOrUnknown(data['datetime']!, _datetimeMeta));
     } else if (isInserting) {
-      context.missing(_timestampMeta);
+      context.missing(_datetimeMeta);
     }
     if (data.containsKey('open')) {
       context.handle(
@@ -314,13 +314,13 @@ class $ValueTableTable extends ValueTable
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {timestamp, symbol};
+  Set<GeneratedColumn> get $primaryKey => {datetime, symbol};
   @override
   ValueTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ValueTableData(
-      timestamp: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}timestamp'])!,
+      datetime: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}datetime'])!,
       open: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}open'])!,
       high: attachedDatabase.typeMapping
@@ -343,7 +343,7 @@ class $ValueTableTable extends ValueTable
 }
 
 class ValueTableData extends DataClass implements Insertable<ValueTableData> {
-  final int timestamp;
+  final String datetime;
   final double open;
   final double high;
   final double low;
@@ -351,7 +351,7 @@ class ValueTableData extends DataClass implements Insertable<ValueTableData> {
   final int volume;
   final int symbol;
   const ValueTableData(
-      {required this.timestamp,
+      {required this.datetime,
       required this.open,
       required this.high,
       required this.low,
@@ -361,7 +361,7 @@ class ValueTableData extends DataClass implements Insertable<ValueTableData> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['timestamp'] = Variable<int>(timestamp);
+    map['datetime'] = Variable<String>(datetime);
     map['open'] = Variable<double>(open);
     map['high'] = Variable<double>(high);
     map['low'] = Variable<double>(low);
@@ -373,7 +373,7 @@ class ValueTableData extends DataClass implements Insertable<ValueTableData> {
 
   ValueTableCompanion toCompanion(bool nullToAbsent) {
     return ValueTableCompanion(
-      timestamp: Value(timestamp),
+      datetime: Value(datetime),
       open: Value(open),
       high: Value(high),
       low: Value(low),
@@ -387,7 +387,7 @@ class ValueTableData extends DataClass implements Insertable<ValueTableData> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ValueTableData(
-      timestamp: serializer.fromJson<int>(json['timestamp']),
+      datetime: serializer.fromJson<String>(json['datetime']),
       open: serializer.fromJson<double>(json['open']),
       high: serializer.fromJson<double>(json['high']),
       low: serializer.fromJson<double>(json['low']),
@@ -400,7 +400,7 @@ class ValueTableData extends DataClass implements Insertable<ValueTableData> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'timestamp': serializer.toJson<int>(timestamp),
+      'datetime': serializer.toJson<String>(datetime),
       'open': serializer.toJson<double>(open),
       'high': serializer.toJson<double>(high),
       'low': serializer.toJson<double>(low),
@@ -411,7 +411,7 @@ class ValueTableData extends DataClass implements Insertable<ValueTableData> {
   }
 
   ValueTableData copyWith(
-          {int? timestamp,
+          {String? datetime,
           double? open,
           double? high,
           double? low,
@@ -419,7 +419,7 @@ class ValueTableData extends DataClass implements Insertable<ValueTableData> {
           int? volume,
           int? symbol}) =>
       ValueTableData(
-        timestamp: timestamp ?? this.timestamp,
+        datetime: datetime ?? this.datetime,
         open: open ?? this.open,
         high: high ?? this.high,
         low: low ?? this.low,
@@ -430,7 +430,7 @@ class ValueTableData extends DataClass implements Insertable<ValueTableData> {
   @override
   String toString() {
     return (StringBuffer('ValueTableData(')
-          ..write('timestamp: $timestamp, ')
+          ..write('datetime: $datetime, ')
           ..write('open: $open, ')
           ..write('high: $high, ')
           ..write('low: $low, ')
@@ -443,12 +443,12 @@ class ValueTableData extends DataClass implements Insertable<ValueTableData> {
 
   @override
   int get hashCode =>
-      Object.hash(timestamp, open, high, low, close, volume, symbol);
+      Object.hash(datetime, open, high, low, close, volume, symbol);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ValueTableData &&
-          other.timestamp == this.timestamp &&
+          other.datetime == this.datetime &&
           other.open == this.open &&
           other.high == this.high &&
           other.low == this.low &&
@@ -458,7 +458,7 @@ class ValueTableData extends DataClass implements Insertable<ValueTableData> {
 }
 
 class ValueTableCompanion extends UpdateCompanion<ValueTableData> {
-  final Value<int> timestamp;
+  final Value<String> datetime;
   final Value<double> open;
   final Value<double> high;
   final Value<double> low;
@@ -467,7 +467,7 @@ class ValueTableCompanion extends UpdateCompanion<ValueTableData> {
   final Value<int> symbol;
   final Value<int> rowid;
   const ValueTableCompanion({
-    this.timestamp = const Value.absent(),
+    this.datetime = const Value.absent(),
     this.open = const Value.absent(),
     this.high = const Value.absent(),
     this.low = const Value.absent(),
@@ -477,7 +477,7 @@ class ValueTableCompanion extends UpdateCompanion<ValueTableData> {
     this.rowid = const Value.absent(),
   });
   ValueTableCompanion.insert({
-    required int timestamp,
+    required String datetime,
     required double open,
     required double high,
     required double low,
@@ -485,7 +485,7 @@ class ValueTableCompanion extends UpdateCompanion<ValueTableData> {
     required int volume,
     required int symbol,
     this.rowid = const Value.absent(),
-  })  : timestamp = Value(timestamp),
+  })  : datetime = Value(datetime),
         open = Value(open),
         high = Value(high),
         low = Value(low),
@@ -493,7 +493,7 @@ class ValueTableCompanion extends UpdateCompanion<ValueTableData> {
         volume = Value(volume),
         symbol = Value(symbol);
   static Insertable<ValueTableData> custom({
-    Expression<int>? timestamp,
+    Expression<String>? datetime,
     Expression<double>? open,
     Expression<double>? high,
     Expression<double>? low,
@@ -503,7 +503,7 @@ class ValueTableCompanion extends UpdateCompanion<ValueTableData> {
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (timestamp != null) 'timestamp': timestamp,
+      if (datetime != null) 'datetime': datetime,
       if (open != null) 'open': open,
       if (high != null) 'high': high,
       if (low != null) 'low': low,
@@ -515,7 +515,7 @@ class ValueTableCompanion extends UpdateCompanion<ValueTableData> {
   }
 
   ValueTableCompanion copyWith(
-      {Value<int>? timestamp,
+      {Value<String>? datetime,
       Value<double>? open,
       Value<double>? high,
       Value<double>? low,
@@ -524,7 +524,7 @@ class ValueTableCompanion extends UpdateCompanion<ValueTableData> {
       Value<int>? symbol,
       Value<int>? rowid}) {
     return ValueTableCompanion(
-      timestamp: timestamp ?? this.timestamp,
+      datetime: datetime ?? this.datetime,
       open: open ?? this.open,
       high: high ?? this.high,
       low: low ?? this.low,
@@ -538,8 +538,8 @@ class ValueTableCompanion extends UpdateCompanion<ValueTableData> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (timestamp.present) {
-      map['timestamp'] = Variable<int>(timestamp.value);
+    if (datetime.present) {
+      map['datetime'] = Variable<String>(datetime.value);
     }
     if (open.present) {
       map['open'] = Variable<double>(open.value);
@@ -568,7 +568,7 @@ class ValueTableCompanion extends UpdateCompanion<ValueTableData> {
   @override
   String toString() {
     return (StringBuffer('ValueTableCompanion(')
-          ..write('timestamp: $timestamp, ')
+          ..write('datetime: $datetime, ')
           ..write('open: $open, ')
           ..write('high: $high, ')
           ..write('low: $low, ')

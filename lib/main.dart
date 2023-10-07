@@ -5,7 +5,7 @@ import 'package:raccoon_investment/db/drift.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final supabase = Supabase.instance.client;
-late Drift drfit;
+late Drift drift;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +18,7 @@ Future<void> main() async {
     authFlowType: AuthFlowType.pkce,
   );
 
-  drfit = Drift();
+  drift = Drift();
 
   runApp(App());
 }

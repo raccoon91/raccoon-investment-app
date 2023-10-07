@@ -24,12 +24,12 @@ const candleChartOptions = {
 };
 
 window.addEventListener('flutterInAppWebViewPlatformReady', () => {
-  const chart = LightweightCharts.createChart(document.getElementById('chart'), chartOptions);
-
-  const candlestickSeries = chart.addCandlestickSeries(candleChartOptions);
-
   window.flutter_inappwebview.callHandler('chartData').then((result) => {
     console.log(JSON.stringify(result));
+
+    const chart = LightweightCharts.createChart(document.getElementById('chart'), chartOptions);
+
+    const candlestickSeries = chart.addCandlestickSeries(candleChartOptions);
 
     candlestickSeries.setData(result);
     

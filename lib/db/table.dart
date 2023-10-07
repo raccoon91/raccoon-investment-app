@@ -7,7 +7,7 @@ class MetaTable extends Table {
 }
 
 class ValueTable extends Table {
-  IntColumn get timestamp => integer()();
+  TextColumn get datetime => text()();
   RealColumn get open => real()();
   RealColumn get high => real()();
   RealColumn get low => real()();
@@ -16,5 +16,5 @@ class ValueTable extends Table {
   IntColumn get symbol => integer().references(MetaTable, #id)();
 
   @override
-  Set<Column> get primaryKey => {timestamp, symbol};
+  Set<Column> get primaryKey => {datetime, symbol};
 }

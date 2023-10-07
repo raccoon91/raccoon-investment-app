@@ -31,7 +31,7 @@ class ChartMeta {
 }
 
 class ChartValue {
-  final int timestamp;
+  final String datetime;
   final double open;
   final double high;
   final double low;
@@ -39,7 +39,7 @@ class ChartValue {
   final int volume;
 
   const ChartValue({
-    required this.timestamp,
+    required this.datetime,
     required this.open,
     required this.high,
     required this.low,
@@ -49,7 +49,7 @@ class ChartValue {
 
   factory ChartValue.fromJson(Map<String, dynamic> json) {
     return ChartValue(
-      timestamp: DateTime.parse(json['datetime']).millisecondsSinceEpoch,
+      datetime: json['datetime'],
       open: double.parse(json['open']),
       high: double.parse(json['high']),
       low: double.parse(json['low']),
@@ -74,7 +74,7 @@ class Chart {
 
     final ChartMeta? meta =
         json['meta'] != null ? ChartMeta.fromJson(metaData) : null;
-    final List<ChartValue> values = valueData.reversed.map((value) {
+    final List<ChartValue> values = valueData.map((value) {
       return ChartValue.fromJson(value);
     }).toList();
 
