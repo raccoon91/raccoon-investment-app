@@ -4,21 +4,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:intl/intl.dart';
 import 'package:raccoon_investment/bloc/chart/chart_bloc.dart';
+import 'package:raccoon_investment/model/symbol_model.dart';
 import 'package:raccoon_investment/repository/chart_repository.dart';
 
 class ChartViewScreen extends StatelessWidget {
-  final String? ticker;
-  final String? type;
+  final Symbol? symbol;
 
-  const ChartViewScreen({super.key, this.ticker, this.type});
+  const ChartViewScreen({super.key, this.symbol});
 
-  static Route<void> route(String? ticker, String? type) {
+  static Route<void> route(Symbol? symbol) {
     return MaterialPageRoute(builder: (context) {
       return BlocProvider(
         create: (context) => ChartBloc(
           chartRepository: ChartRepository(),
         ),
-        child: ChartViewScreen(ticker: ticker, type: type),
+        child: ChartViewScreen(symbol: symbol),
       );
     });
   }
@@ -32,7 +32,7 @@ class ChartViewScreen extends StatelessWidget {
             icon: const Icon(Icons.cloud_download_outlined),
             tooltip: 'sync chart data',
             onPressed: () {
-              context.read<ChartBloc>().add(SyncChart(ticker, type));
+              context.read<ChartBloc>().add(SyncChart(symbol));
             },
           ),
         ],

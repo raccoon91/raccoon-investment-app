@@ -5,11 +5,7 @@ sealed class ChartEvent {
 }
 
 final class SyncChart extends ChartEvent {
-  final String? ticker;
-  final String? type;
+  final Symbol? symbol;
 
-  SyncChart(
-    this.ticker,
-    this.type,
-  );
+  SyncChart(this.symbol);
 }

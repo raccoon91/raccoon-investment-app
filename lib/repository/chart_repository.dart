@@ -4,9 +4,10 @@ import 'dart:async';
 // import 'package:http/http.dart' as http;
 import 'package:raccoon_investment/main.dart';
 import 'package:raccoon_investment/model/chart_model.dart';
+import 'package:raccoon_investment/model/symbol_model.dart';
 
 class ChartRepository {
-  Future<Chart> syncChartData(String? ticker, String? type) async {
+  Future<Chart> syncChartData(Symbol? symbol) async {
     try {
       // final res = await http.get(
       //   Uri.https('${dotenv.env['TWELVE_DATA_API']}', '/time_series', {
