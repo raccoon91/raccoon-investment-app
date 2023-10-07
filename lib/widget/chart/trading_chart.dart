@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:raccoon_investment/db/drift.dart';
+import 'package:raccoon_investment/main.dart';
 
 class TradingChart extends StatelessWidget {
   final List<ValueTableData> values;
@@ -41,8 +42,7 @@ class TradingChart extends StatelessWidget {
           );
         },
         onConsoleMessage: (controller, consoleMessage) {
-          print('webview message');
-          print(consoleMessage.message);
+          logger.i('webview message\n${consoleMessage.message}');
         },
       ),
     );

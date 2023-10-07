@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raccoon_investment/main.dart';
 import 'package:raccoon_investment/model/stock_model.dart';
 import 'package:raccoon_investment/model/trade_model.dart';
 import 'package:raccoon_investment/repository/trade_repository.dart';
@@ -73,15 +74,16 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
     try {
       emit(state.copyWith(status: TradeStatus.loading));
 
-      print(' === === === ===');
-      print(event.userId);
-      print(event.type);
-      print(event.symbolId);
-      print(event.date);
-      print(event.price.toString());
-      print(event.count.toString());
-      print(event.commission.toString());
-      print(event.text);
+      logger.i('''post trade
+        ${event.userId}
+        ${event.type}
+        ${event.symbolId}
+        ${event.date}
+        ${event.price.toString()}
+        ${event.count.toString()}
+        ${event.commission.toString()}
+        ${event.text}
+      ''');
 
       emit(state.copyWith(status: TradeStatus.success));
     } catch (error) {
