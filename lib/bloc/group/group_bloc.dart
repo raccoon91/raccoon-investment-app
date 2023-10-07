@@ -10,14 +10,14 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
   final GroupRepository groupRepository;
 
   GroupBloc({required this.groupRepository}) : super(const GroupState()) {
-    on<GetsGroup>(onGetsGroup);
+    on<GetGroups>(onGetGroups);
   }
 
-  void onGetsGroup(GetsGroup event, Emitter<GroupState> emit) async {
+  void onGetGroups(GetGroups event, Emitter<GroupState> emit) async {
     try {
       emit(state.copyWith(status: GroupStatus.loading));
 
-      final groups = await groupRepository.getsGroup();
+      final groups = await groupRepository.getGroups();
 
       emit(
         state.copyWith(

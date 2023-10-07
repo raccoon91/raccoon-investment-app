@@ -11,7 +11,7 @@ import 'package:raccoon_investment/model/symbol_model.dart';
 class ChartRepository {
   Future<List<ValueTableData>> getChartData(Symbol? symbol) async {
     try {
-      var chartValues = await drift.getsChartValue(symbol?.id);
+      var chartValues = await drift.getChartValues(symbol?.id);
 
       return chartValues;
     } catch (error) {
@@ -38,9 +38,9 @@ class ChartRepository {
 
       final Chart chartData = Chart.fromJson(data);
 
-      await drift.upsertCharts(symbol, chartData);
+      await drift.upsertChartValues(symbol, chartData);
 
-      var chartValues = await drift.getsChartValue(symbol.id);
+      var chartValues = await drift.getChartValues(symbol.id);
 
       return chartValues;
     } catch (error) {
@@ -48,7 +48,7 @@ class ChartRepository {
     }
   }
 
-  Future<void> deleteChartData() async {
+  Future<void> deleteDatabase() async {
     try {
       await drift.deleteEverything();
     } catch (error) {

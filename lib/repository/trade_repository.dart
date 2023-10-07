@@ -4,7 +4,7 @@ import 'package:raccoon_investment/main.dart';
 import 'package:raccoon_investment/model/trade_model.dart';
 
 class TradeRepository {
-  Future<List<Trade>> getsTrade() async {
+  Future<List<Trade>> getTrades() async {
     try {
       final List data = await supabase
           .from('trades')

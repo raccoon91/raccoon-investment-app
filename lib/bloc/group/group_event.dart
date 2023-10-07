@@ -4,4 +4,4 @@ sealed class GroupEvent {
   const GroupEvent();
 }
 
-final class GetsGroup extends GroupEvent {}
+final class GetGroups extends GroupEvent {}

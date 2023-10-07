@@ -27,17 +27,17 @@ class MainScreen extends StatelessWidget {
         BlocProvider(
           create: (context) => TradeBloc(
             tradeRepository: TradeRepository(),
-          )..add(GetsTrade()),
+          )..add(GetTrades()),
         ),
         BlocProvider(
           create: (context) => GroupBloc(
             groupRepository: GroupRepository(),
-          )..add(GetsGroup()),
+          )..add(GetGroups()),
         ),
         BlocProvider(
           create: (context) => FavoriteBloc(
             favoriteRepository: FavoriteRepository(),
-          )..add(GetsFavorite()),
+          )..add(GetFavorites()),
         ),
         BlocProvider(
           create: (context) => ChartBloc(

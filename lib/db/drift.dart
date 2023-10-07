@@ -14,7 +14,7 @@ class Drift extends _$Drift {
   @override
   int get schemaVersion => 1;
 
-  Future<List<ValueTableData>> getsChartValue(int? symbolId) async {
+  Future<List<ValueTableData>> getChartValues(int? symbolId) async {
     try {
       if (symbolId == null) return [];
 
@@ -39,7 +39,7 @@ class Drift extends _$Drift {
     }
   }
 
-  Future<void> upsertCharts(Symbol? symbol, Chart chart) async {
+  Future<void> upsertChartValues(Symbol? symbol, Chart chart) async {
     try {
       if (symbol != null) {
         await into(metaTable).insertOnConflictUpdate(

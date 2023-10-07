@@ -12,11 +12,11 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
   final TradeRepository tradeRepository;
 
   TradeBloc({required this.tradeRepository}) : super(const TradeState()) {
-    on<GetsTrade>(onGetsTrade);
+    on<GetTrades>(onGetTrades);
     on<PostTrade>(onPostTrade);
   }
 
-  void onGetsTrade(GetsTrade event, Emitter<TradeState> emit) async {
+  void onGetTrades(GetTrades event, Emitter<TradeState> emit) async {
     try {
       emit(state.copyWith(status: TradeStatus.loading));
 
@@ -25,7 +25,7 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
       Map<String, Stock> stocks = {};
       List<Stock> stockList = [];
 
-      final trades = await tradeRepository.getsTrade();
+      final trades = await tradeRepository.getTrades();
 
       for (Trade trade in trades) {
         final symbol = trade.symbols;

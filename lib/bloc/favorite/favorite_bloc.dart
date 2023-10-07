@@ -11,14 +11,14 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
   FavoriteBloc({required this.favoriteRepository})
       : super(const FavoriteState()) {
-    on<GetsFavorite>(onGetsFavorite);
+    on<GetFavorites>(onGetFavorites);
   }
 
-  void onGetsFavorite(GetsFavorite event, Emitter<FavoriteState> emit) async {
+  void onGetFavorites(GetFavorites event, Emitter<FavoriteState> emit) async {
     try {
       emit(state.copyWith(status: FavoriteStatus.loading));
 
-      final favorites = await favoriteRepository.getsFavorite();
+      final favorites = await favoriteRepository.getFavorites();
 
       emit(
         state.copyWith(status: FavoriteStatus.success, favorites: favorites),

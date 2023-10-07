@@ -4,4 +4,4 @@ sealed class FavoriteEvent {
   const FavoriteEvent();
 }
 
-final class GetsFavorite extends FavoriteEvent {}
+final class GetFavorites extends FavoriteEvent {}

@@ -56,7 +56,7 @@ class ChartBloc extends Bloc<ChartEvent, ChartState> {
 
   void onDeleteChart(DeleteChart event, Emitter<ChartState> emit) async {
     try {
-      await chartRepository.deleteChartData();
+      await chartRepository.deleteDatabase();
 
       emit(
         state.copyWith(

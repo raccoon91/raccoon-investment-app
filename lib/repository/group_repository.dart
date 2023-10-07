@@ -4,7 +4,7 @@ import 'package:raccoon_investment/main.dart';
 import 'package:raccoon_investment/model/group_model.dart';
 
 class GroupRepository {
-  Future<List<Group>> getsGroup() async {
+  Future<List<Group>> getGroups() async {
     try {
       final List data = await supabase
           .from('groups')

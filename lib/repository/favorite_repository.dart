@@ -4,7 +4,7 @@ import 'package:raccoon_investment/main.dart';
 import 'package:raccoon_investment/model/favorite_model.dart';
 
 class FavoriteRepository {
-  Future<List<Favorite>> getsFavorite() async {
+  Future<List<Favorite>> getFavorites() async {
     try {
       final List data = await supabase
           .from('favorites')

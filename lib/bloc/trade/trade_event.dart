@@ -4,7 +4,7 @@ sealed class TradeEvent {
   const TradeEvent();
 }
 
-final class GetsTrade extends TradeEvent {}
+final class GetTrades extends TradeEvent {}
 
 final class PostTrade extends TradeEvent {
   final String userId;
