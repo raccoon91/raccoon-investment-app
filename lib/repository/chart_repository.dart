@@ -30,7 +30,7 @@ class ChartRepository {
           'interval': '1week',
           'type': symbol.type,
           'country': 'United States',
-          'outputsize': '50',
+          'outputsize': '5000',
         }),
       );
 
