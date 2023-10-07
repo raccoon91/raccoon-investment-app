@@ -25,15 +25,5 @@ Future<void> main() async {
 
   drift = Drift();
 
-  logger.t("Trace log");
-
-  logger.d("Debug log");
-
-  logger.i("Info log");
-
-  logger.w("Warning log");
-
-  logger.e("Error log", error: 'Test Error');
-
   runApp(App());
 }
