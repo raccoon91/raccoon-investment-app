@@ -38,6 +38,8 @@ class BottomNavigation extends StatelessWidget {
           onTap: (index) {
             if (index == 0) {
               context.read<NavigationCubit>().navigate(NavigationMenu.home);
+            } else if (index == 2) {
+              context.read<NavigationCubit>().navigate(NavigationMenu.trade);
             } else if (index == 3) {
               context.read<NavigationCubit>().navigate(NavigationMenu.chart);
             } else if (index == 4) {
