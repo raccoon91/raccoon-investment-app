@@ -22,6 +22,7 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
 
       num totalCount = 0;
       num totalPrice = 0;
+      Map<String, List<Trade>> tradeMap = {};
       Map<String, Stock> stocks = {};
       List<Stock> stockList = [];
 
@@ -31,6 +32,12 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
         final symbol = trade.symbols;
 
         if (symbol == null) return;
+
+        if (tradeMap[trade.date] == null) {
+          tradeMap[trade.date] = [];
+        }
+
+        tradeMap[trade.date]?.add(trade);
 
         if (stocks[symbol.ticker] == null) {
           stocks[symbol.ticker] = Stock.fromJson({
@@ -60,6 +67,7 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
         state.copyWith(
           status: TradeStatus.success,
           trades: trades,
+          tradeMap: tradeMap,
           stockList: stockList.sublist(0, 4),
           totalCount: totalCount,
           totalPrice: totalPrice,

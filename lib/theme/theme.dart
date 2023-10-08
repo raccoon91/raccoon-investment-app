@@ -19,6 +19,7 @@ class ThemeClass {
   Color onError = const Color(0xff690005);
   Color onErrorContainer = const Color(0xffffb4ab);
   Color onBackground = const Color(0xffe0e3e1);
+  Color onSurface = const Color(0xffe0e3e1);
 
   static ThemeData theme = ThemeData(
     colorScheme: const ColorScheme.light().copyWith(
@@ -38,6 +39,7 @@ class ThemeClass {
       onError: _themeClass.onError,
       onErrorContainer: _themeClass.onErrorContainer,
       onBackground: _themeClass.onBackground,
+      onSurface: _themeClass.onSurface,
     ),
     textTheme: TextTheme(
       headlineLarge: TextStyle(
