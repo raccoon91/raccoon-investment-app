@@ -45,73 +45,67 @@ class _TradeScreenState extends State<TradeScreen> {
                       onDaySelected: onPressedDay,
                     ),
                     const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 16,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Padding(
+                    (selected != null && state.tradeMap[selected] != null)
+                        ? Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
                               vertical: 12,
+                              horizontal: 16,
                             ),
-                            child: Text('$selected'),
-                          ),
-                          ...(state.tradeMap[selected]?.map(
-                                (trade) {
-                                  return Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 12,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.surface,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: state.tradeMap[selected]?.map(
+                                    (trade) {
+                                      return Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 12,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(trade.symbols?.ticker ?? ''),
-                                            const SizedBox(height: 6),
-                                            Text(
-                                              trade.symbols?.name ?? '',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall,
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(trade.symbols?.ticker ??
+                                                    ''),
+                                                const SizedBox(height: 6),
+                                                Text(
+                                                  trade.symbols?.name ?? '',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(trade.date),
+                                                const SizedBox(height: 6),
+                                                Text(
+                                                  '${trade.count}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(trade.date),
-                                            const SizedBox(height: 6),
-                                            Text(
-                                              '${trade.count}',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ).toList() ??
-                              []),
-                        ],
-                      ),
-                    )
+                                      );
+                                    },
+                                  ).toList() ??
+                                  [],
+                            ),
+                          )
+                        : Container(),
                   ],
                 );
               },
