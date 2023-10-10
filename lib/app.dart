@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raccoon_investment/bloc/auth/auth_bloc.dart';
 import 'package:raccoon_investment/repository/auth_repository.dart';
 import 'package:raccoon_investment/screen/chart_screen.dart';
+import 'package:raccoon_investment/screen/favorite_screen.dart';
 import 'package:raccoon_investment/screen/login_screen.dart';
 import 'package:raccoon_investment/screen/main_screen.dart';
 import 'package:raccoon_investment/theme/theme.dart';
@@ -48,7 +49,8 @@ class App extends StatelessWidget {
         },
         onGenerateRoute: (_) => LoginScreen.route(),
         routes: {
-          '/chartview': (context) => const ChartScreen(),
+          '/favorite': (context) => const FavoriteScreen(),
+          '/chart': (context) => const ChartScreen(),
         },
       ),
     );

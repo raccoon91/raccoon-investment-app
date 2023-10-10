@@ -17,8 +17,8 @@ class BottomNavigation extends StatelessWidget {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.label),
-              label: 'Symbol',
+              icon: Icon(Icons.star),
+              label: 'Favorite',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today),
@@ -38,6 +38,8 @@ class BottomNavigation extends StatelessWidget {
           onTap: (index) {
             if (index == 0) {
               context.read<NavigationCubit>().navigate(NavigationMenu.home);
+            } else if (index == 1) {
+              context.read<NavigationCubit>().navigate(NavigationMenu.favorite);
             } else if (index == 2) {
               context.read<NavigationCubit>().navigate(NavigationMenu.trade);
             } else if (index == 3) {

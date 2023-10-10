@@ -10,6 +10,7 @@ import 'package:raccoon_investment/repository/favorite_repository.dart';
 import 'package:raccoon_investment/repository/group_repository.dart';
 import 'package:raccoon_investment/repository/trade_repository.dart';
 import 'package:raccoon_investment/screen/chart_list_screen.dart';
+import 'package:raccoon_investment/screen/favorite_list_screen.dart';
 import 'package:raccoon_investment/screen/home_screen.dart';
 import 'package:raccoon_investment/screen/setting_screen.dart';
 import 'package:raccoon_investment/screen/trade_screen.dart';
@@ -52,6 +53,8 @@ class MainScreen extends StatelessWidget {
           switch (state.menu) {
             case NavigationMenu.home:
               return const HomeScreen();
+            case NavigationMenu.favorite:
+              return const FavoriteListScreen();
             case NavigationMenu.trade:
               return const TradeScreen();
             case NavigationMenu.chart:
