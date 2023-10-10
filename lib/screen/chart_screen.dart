@@ -1,57 +1,85 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:raccoon_investment/bloc/favorite/favorite_bloc.dart';
-import 'package:raccoon_investment/screen/chart_view_screen.dart';
-import 'package:raccoon_investment/widget/base/layout.dart';
+import 'package:raccoon_investment/bloc/chart/chart_bloc.dart';
+import 'package:raccoon_investment/model/symbol_model.dart';
+import 'package:raccoon_investment/repository/chart_repository.dart';
+import 'package:raccoon_investment/widget/chart/trading_chart.dart';
 
 class ChartScreen extends StatelessWidget {
-  const ChartScreen({super.key});
+  final Symbol? symbol;
 
-  static Route<void> route() {
-    return MaterialPageRoute(builder: (context) => const ChartScreen());
+  const ChartScreen({super.key, this.symbol});
+
+  static Route<void> route(Symbol? symbol) {
+    return MaterialPageRoute(builder: (context) {
+      return BlocProvider(
+        create: (context) => ChartBloc(
+          chartRepository: ChartRepository(),
+        )..add(GetChart(symbol)),
+        child: ChartScreen(symbol: symbol),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Layout(
-      child: BlocBuilder<FavoriteBloc, FavoriteState>(
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: state.favorites.map((favorite) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    ChartViewScreen.route(favorite.symbols),
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 24,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(favorite.symbols?.name ?? ''),
-                      const Icon(
-                        Icons.chevron_right,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                    ],
-                  ),
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.cloud_download_outlined),
+            tooltip: 'sync chart data',
+            onPressed: () {
+              context.read<ChartBloc>().add(SyncChart(symbol));
+            },
+          ),
+        ],
+      ),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Column(
+            children: [
+              Flexible(
+                child: BlocConsumer<ChartBloc, ChartState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state.status.isLoading) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 300,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+
+                    if (state.status.isEmpty) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 300,
+                        child: const Center(
+                          child: Text('No chart data'),
+                        ),
+                      );
+                    }
+
+                    if (Platform.isAndroid) {
+                      return state.values.isNotEmpty
+                          ? TradingChart(values: state.values)
+                          : Container();
+                    }
+
+                    return Container();
+                  },
                 ),
-              );
-            }).toList(),
-          );
-        },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
