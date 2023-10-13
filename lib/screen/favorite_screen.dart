@@ -36,6 +36,16 @@ class FavoriteScreen extends StatelessWidget {
                     return current.favorite != null;
                   },
                   builder: (context, state) {
+                    if (state.status.isLoading || state.favorite == null) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 300,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
