@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raccoon_investment/bloc/favorite/favorite_bloc.dart';
-import 'package:raccoon_investment/screen/favorite_screen.dart';
 import 'package:raccoon_investment/widget/base/layout.dart';
+import 'package:raccoon_investment/widget/favorite/favorite_bottom_sheet.dart';
 
 class FavoriteListScreen extends StatelessWidget {
   const FavoriteListScreen({super.key});
@@ -21,9 +21,11 @@ class FavoriteListScreen extends StatelessWidget {
             children: state.favorites.map((favorite) {
               return GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    FavoriteScreen.route(favorite.symbols),
+                  showBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return FavoriteBottomSheet(favorite: favorite);
+                    },
                   );
                 },
                 child: Container(
@@ -40,11 +42,7 @@ class FavoriteListScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(favorite.symbols?.name ?? ''),
-                      const Icon(
-                        Icons.chevron_right,
-                        color: Colors.white,
-                        size: 24,
-                      ),
+                      const SizedBox(width: 24, height: 24),
                     ],
                   ),
                 ),
