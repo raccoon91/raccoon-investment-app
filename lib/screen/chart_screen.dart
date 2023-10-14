@@ -71,9 +71,15 @@ class ChartScreen extends StatelessWidget {
                       return state.values.isNotEmpty
                           ? TradingChart(values: state.values)
                           : Container();
+                    } else {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 300,
+                        child: const Center(
+                          child: Text('Unsupported platform'),
+                        ),
+                      );
                     }
-
-                    return Container();
                   },
                 ),
               ),
