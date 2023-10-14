@@ -62,7 +62,7 @@ class MainScreen extends StatelessWidget {
             case NavigationMenu.setting:
               return const SettingScreen();
             default:
-              return Container();
+              return const HomeScreen();
           }
         },
       ),
