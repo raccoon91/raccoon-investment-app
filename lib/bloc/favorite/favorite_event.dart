@@ -5,9 +5,3 @@ sealed class FavoriteEvent {
 }
 
 final class GetFavorites extends FavoriteEvent {}
-
-final class GetFavorite extends FavoriteEvent {
-  final Symbol? symbol;
-
-  GetFavorite(this.symbol);
-}

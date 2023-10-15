@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:raccoon_investment/model/favorite_model.dart';
+import 'package:raccoon_investment/model/group_model.dart';
 
 class FavoriteBottomSheet extends StatelessWidget {
+  final List<Group> groups;
   final Favorite favorite;
 
   const FavoriteBottomSheet({
     super.key,
+    required this.groups,
     required this.favorite,
   });
 
@@ -33,24 +36,35 @@ class FavoriteBottomSheet extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12,
-              horizontal: 16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Group',
-                  style: Theme.of(context).textTheme.bodySmall,
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
                 ),
-                const SizedBox(height: 8),
-                Text('${favorite.groupId}'),
-              ],
-            ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Group',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 8),
+                    Builder(builder: (context) {
+                      var group = groups.firstWhere((group) {
+                        return group.id == favorite.groupId;
+                      });
+
+                      return Text(group.name);
+                    }),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
+            ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           Row(
             children: [
               Padding(
