@@ -90,6 +90,18 @@ class Calendar extends StatelessWidget {
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(4),
         ),
+        outsideDecoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        disabledDecoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        holidayDecoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(4),
+        ),
       ),
       calendarBuilders: CalendarBuilders(
         markerBuilder: (context, day, events) {
