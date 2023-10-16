@@ -15,6 +15,10 @@ class FavoriteListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Layout(
+      floatingActionButton: FloatingActionButton.small(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
       child: BlocBuilder<GroupBloc, GroupState>(
         buildWhen: (previous, current) {
           return current.groups.isNotEmpty;
@@ -34,15 +38,6 @@ class FavoriteListScreen extends StatelessWidget {
                         context,
                         FavoriteScreen.route(groupState.groups, favorite),
                       );
-                      // showBottomSheet(
-                      //   context: context,
-                      //   builder: (context) {
-                      //     return FavoriteBottomSheet(
-                      //       groups: groupState.groups,
-                      //       favorite: favorite,
-                      //     );
-                      //   },
-                      // );
                     },
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 10),
