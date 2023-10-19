@@ -5,18 +5,18 @@ import 'package:raccoon_investment/bloc/trade/trade_bloc.dart';
 import 'package:raccoon_investment/widget/base/layout.dart';
 import 'package:raccoon_investment/widget/trade/calendar.dart';
 
-class TradeScreen extends StatefulWidget {
-  const TradeScreen({super.key});
+class TradeCalendarScreen extends StatefulWidget {
+  const TradeCalendarScreen({super.key});
 
   static Route<void> route() {
-    return MaterialPageRoute(builder: (context) => const TradeScreen());
+    return MaterialPageRoute(builder: (context) => const TradeCalendarScreen());
   }
 
   @override
-  State<TradeScreen> createState() => _TradeScreenState();
+  State<TradeCalendarScreen> createState() => _TradeCalendarScreenState();
 }
 
-class _TradeScreenState extends State<TradeScreen> {
+class _TradeCalendarScreenState extends State<TradeCalendarScreen> {
   String? selected;
 
   onPressedDay(selectedDay, focusedDay) {

@@ -13,7 +13,7 @@ import 'package:raccoon_investment/screen/chart_list_screen.dart';
 import 'package:raccoon_investment/screen/favorite_list_screen.dart';
 import 'package:raccoon_investment/screen/home_screen.dart';
 import 'package:raccoon_investment/screen/setting_screen.dart';
-import 'package:raccoon_investment/screen/trade_screen.dart';
+import 'package:raccoon_investment/screen/trade_calendar_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -56,7 +56,7 @@ class MainScreen extends StatelessWidget {
             case NavigationMenu.favorite:
               return const FavoriteListScreen();
             case NavigationMenu.trade:
-              return const TradeScreen();
+              return const TradeCalendarScreen();
             case NavigationMenu.chart:
               return const ChartListScreen();
             case NavigationMenu.setting:
