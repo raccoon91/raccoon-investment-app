@@ -6,6 +6,7 @@ import 'package:raccoon_investment/screen/chart_screen.dart';
 import 'package:raccoon_investment/screen/favorite_screen.dart';
 import 'package:raccoon_investment/screen/login_screen.dart';
 import 'package:raccoon_investment/screen/main_screen.dart';
+import 'package:raccoon_investment/screen/trade_screen.dart';
 import 'package:raccoon_investment/theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -50,6 +51,7 @@ class App extends StatelessWidget {
         onGenerateRoute: (_) => LoginScreen.route(),
         routes: {
           '/favorite': (context) => const FavoriteScreen(),
+          '/trade': (context) => const TradeScreen(),
           '/chart': (context) => const ChartScreen(),
         },
       ),
